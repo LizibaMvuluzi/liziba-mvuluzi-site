@@ -1,4 +1,14 @@
 {
   "schemaVersion": 1,
-  "profiles": []
+  "profiles": [
+    { "id": "facebook", "label": "Facebook", "url": "https://www.facebook.com/lizibamvuluzi01", "group": "social" },
+    { "id": "instagram", "label": "Instagram", "url": "https://www.instagram.com/lizibamvuluzi", "group": "social" },
+    { "id": "tiktok", "label": "TikTok", "url": "https://www.tiktok.com/@lizibamvuluzi", "group": "social" },
+    { "id": "youtube", "label": "YouTube", "url": "https://youtube.com/@lizibamvuluzi", "group": "social" },
+    { "id": "spotify", "label": "Spotify", "url": "https://open.spotify.com/artist/60rY5DDiCbVMoLl6PeUVyl", "group": "streaming" },
+    { "id": "apple-music", "label": "Apple Music", "url": "https://music.apple.com/fr/artist/liziba-mvuluzi/1813984515", "group": "streaming" },
+    { "id": "deezer", "label": "Deezer", "url": "https://link.deezer.com/s/340E7vIZbh4JHc9Gb6iJ9", "group": "streaming" },
+    { "id": "tidal", "label": "TIDAL", "url": "https://tidal.com/@lizibamvuluzi", "group": "streaming" },
+    { "id": "amazon-music", "label": "Amazon Music", "url": "https://music.amazon.fr/artists/B0FBMFZMFV", "group": "streaming" }
+  ]
 }

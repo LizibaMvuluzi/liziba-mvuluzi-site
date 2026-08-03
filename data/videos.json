@@ -1,4 +1,21 @@
 {
   "schemaVersion": 1,
-  "videos": []
+  "videos": [
+    {
+      "id": "le-genereux",
+      "title": "Le Généreux Remix",
+      "youtubeId": "6EISrmC-jaY",
+      "category": "clip",
+      "publishedDate": "",
+      "relatedReleaseId": "le-genereux-remix"
+    },
+    {
+      "id": "envie-des-choses",
+      "title": "Envie des choses",
+      "youtubeId": "GWR7To5ndaY",
+      "category": "clip",
+      "publishedDate": "",
+      "relatedReleaseId": "envie-des-choses"
+    }
+  ]
 }

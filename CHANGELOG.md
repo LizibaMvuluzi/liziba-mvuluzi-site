@@ -48,6 +48,51 @@ futures évolutions sans restructuration.
 
 ---
 
+## [Non publié] — Remplissage des données réelles (V1.2, contenu)
+
+Population des 4 fichiers JSON avec les données réelles communiquées.
+`concerts.json` et `site.json` inchangés (déjà corrects). **`index.html`,
+`css/style.css` et `js/main.js` non modifiés** — aucune fonction de rendu
+n'est encore branchée sur ces données (voir points ouverts ci-dessous).
+
+### Renseigné
+- `artist.json` : nom, nom civil, titre, slogan, genres, WhatsApp
+  (lien « click to chat » `wa.me/message/...`). Champs restants
+  (email, téléphone, pays) laissés vides, non communiqués à ce stade.
+- `socials.json` : 9 profils (Facebook, Instagram, TikTok, YouTube — `social` ;
+  Spotify, Apple Music, Deezer, TIDAL, Amazon Music — `streaming`).
+- `releases.json` : 3 sorties (« Le Généreux Remix », « Je l'aime de tout
+  mon cœur », « Envie des choses »), chacune avec son lien Spotify. Dates de
+  sortie et pochettes non encore communiquées (champs vides).
+- `videos.json` : 2 clips, reliés à leurs sorties respectives via
+  `relatedReleaseId`.
+
+### Décisions techniques prises lors de la saisie
+- `releases[].id` et `videos[].id` n'étaient pas fournis explicitement :
+  slugs dérivés des titres, choisis pour correspondre aux références
+  croisées `videoId` / `relatedReleaseId` communiquées. Vérifiés cohérents
+  (aucune référence orpheline).
+- `contact.whatsapp` contient le lien complet (`https://wa.me/message/...`)
+  plutôt qu'un simple numéro — plus robuste que le format `wa.me/<numéro>`
+  initialement documenté. Le champ reste nommé `whatsapp`, seule sa
+  tolérance de format est étendue.
+- `releaseDate` laissé vide (`""`) pour les 3 sorties : en son absence,
+  l'ordre des sorties dans le tableau fait foi pour déterminer la plus
+  récente, jusqu'à ce que les dates réelles soient renseignées.
+
+### Points ouverts avant le branchement de l'affichage dynamique
+- Le champ `featuring` est laissé vide pour « Le Généreux Remix » : à
+  confirmer si le featuring doit y être ajouté.
+- Aucune section « Nouveautés » n'existe dans le HTML actuel (portée
+  différée depuis les fondations V1.2) — à trancher avant de rendre ce
+  comportement automatique.
+- Le rendu dynamique (lecture de `window.siteData` pour peupler Musique,
+  Discographie, Vidéos, Réseaux sociaux) reste à développer : les données
+  sont chargées et disponibles, mais rien n'est encore affiché à partir
+  d'elles.
+
+---
+
 ## [1.1.3] — 2026-08-03
 
 ### Corrigé

@@ -1,4 +1,65 @@
 {
   "schemaVersion": 1,
-  "releases": []
+  "releases": [
+    {
+      "id": "le-genereux-remix",
+      "title": "Le Généreux Remix",
+      "featuring": [],
+      "type": "single",
+      "releaseDate": "",
+      "cover": "",
+      "description": "Dernière sortie officielle.",
+      "links": {
+        "spotify": "https://open.spotify.com/track/5KJt9mOv6YoC99p1U7VhkJ",
+        "appleMusic": "",
+        "youtubeMusic": "",
+        "deezer": "",
+        "amazonMusic": "",
+        "boomplay": "",
+        "audiomack": "",
+        "bandcamp": ""
+      },
+      "videoId": "le-genereux"
+    },
+    {
+      "id": "je-laime-de-tout-mon-coeur",
+      "title": "Je l'aime de tout mon cœur",
+      "featuring": [],
+      "type": "single",
+      "releaseDate": "",
+      "cover": "",
+      "description": "Nouvelle sortie officielle.",
+      "links": {
+        "spotify": "https://open.spotify.com/track/5AKi21xFqNY9Me1xGbIt15",
+        "appleMusic": "",
+        "youtubeMusic": "",
+        "deezer": "",
+        "amazonMusic": "",
+        "boomplay": "",
+        "audiomack": "",
+        "bandcamp": ""
+      },
+      "videoId": null
+    },
+    {
+      "id": "envie-des-choses",
+      "title": "Envie des choses",
+      "featuring": [],
+      "type": "single",
+      "releaseDate": "",
+      "cover": "",
+      "description": "Single officiel.",
+      "links": {
+        "spotify": "https://open.spotify.com/track/6BvOQLfnBlYB2aNkBI2sPr",
+        "appleMusic": "",
+        "youtubeMusic": "",
+        "deezer": "",
+        "amazonMusic": "",
+        "boomplay": "",
+        "audiomack": "",
+        "bandcamp": ""
+      },
+      "videoId": "envie-des-choses"
+    }
+  ]
 }
