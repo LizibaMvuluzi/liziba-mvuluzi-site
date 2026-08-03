@@ -1,58 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- TODO : confirmer le domaine définitif puis mettre à jour chaque <loc> ci-dessous -->
+<!-- URLs temporaires GitHub Pages en attendant le domaine définitif lizibamvuluzi.com — voir index.html pour la marche à suivre lors du passage au domaine personnalisé -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.lizibamvuluzi.com/</loc>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.lizibamvuluzi.com/#biographie</loc>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/#biographie</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.lizibamvuluzi.com/#musique</loc>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/#musique</loc>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.lizibamvuluzi.com/#videos</loc>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/#videos</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.lizibamvuluzi.com/#galerie</loc>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/#galerie</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.lizibamvuluzi.com/#discographie</loc>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/#discographie</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.lizibamvuluzi.com/#concerts</loc>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/#concerts</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.lizibamvuluzi.com/#presse</loc>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/#presse</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.lizibamvuluzi.com/#reseaux</loc>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/#reseaux</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.lizibamvuluzi.com/#booking</loc>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/#booking</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.lizibamvuluzi.com/#contact</loc>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/#contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
