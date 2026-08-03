@@ -1,35 +1,51 @@
-# Images à intégrer
+# Images — arborescence par usage
 
-Déposer ici les fichiers réels, puis relier chaque emplacement dans le code
-comme indiqué ci-dessous.
+Architecture définitive validée (fondations V1.2). Chaque sous-dossier
+correspond à un usage précis ; déposer les fichiers réels directement dedans.
+
+```
+assets/images/
+├── hero/      → portrait(s) plein écran de la section Hero
+├── gallery/   → photos de la section Galerie
+├── covers/    → pochettes de sorties (référencées depuis data/releases.json)
+├── press/     → visuels haute définition destinés au kit presse
+└── social/    → image de partage Open Graph / Twitter Card (aperçu de lien)
+```
+
+Un fichier `.gitkeep` est présent dans chaque dossier vide pour que Git le
+suive avant l'ajout du premier média — il peut être supprimé sans risque dès
+qu'un vrai fichier est déposé au même endroit.
 
 ## Fichiers attendus
 
-| Fichier | Usage | Format conseillé |
+| Dossier | Fichier | Format conseillé |
 |---|---|---|
-| `hero-portrait.jpg` | Portrait plein cadre de la section Hero | Portrait, min. 1800×2400px, poids < 400 Ko (compressé) |
-| `og-cover.jpg` | Image de partage réseaux sociaux (Open Graph / Twitter Card) | 1200×630px |
-| `gallery-01.jpg` … `gallery-06.jpg` | Photos de la section Galerie | Haute résolution, ratio libre |
+| `hero/` | `hero-portrait.jpg` (nom libre) | Portrait, min. 1800×2400px, poids < 400 Ko compressé |
+| `social/` | `og-cover.jpg` (nom libre) | 1200×630px |
+| `gallery/` | `gallery-01.jpg` … `gallery-06.jpg` (ou noms libres) | Haute résolution, ratio libre |
+| `covers/` | une image par sortie, nommée selon l'`id` de la sortie dans `data/releases.json` | Carré conseillé (1:1) |
+| `press/` | visuels destinés à la section Presse | Haute résolution |
 
-## Où brancher chaque image
+## Où ces images sont branchées
 
-**Portrait du Hero** — dans `css/style.css`, règle `.hero__portrait-frame` :
-ajouter `background-image: url("../assets/images/hero-portrait.jpg");`
-ou insérer directement une balise `<img>` dans le conteneur
-`.hero__portrait-frame` de `index.html`.
+Tant que la couche de données (`data/*.json`) n'est pas encore consommée
+pour l'affichage (voir `CHANGELOG.md`, section « Non publié »), les chemins
+d'image restent à relier manuellement dans le code, comme documenté dans le
+README principal :
 
-**Galerie** — chaque vignette est un `<button class="gallery__item">` dans
-`index.html` (section `#galerie`). Ajouter une balise `<img>` avec un `alt`
-descriptif à l'intérieur de chaque bouton, avec `loading="lazy"`. Le script
-`js/main.js` (fonction `initLightbox`) contient un commentaire `TODO`
-indiquant où relier l'image agrandie dans la lightbox.
+- **Portrait du Hero** → `css/style.css`, règle `.hero__portrait-frame`.
+- **Galerie** → balises `<img>` à ajouter dans chaque `<button class="gallery__item">`
+  d'`index.html`, avec un `alt` descriptif et `loading="lazy"`.
+- **Image de partage (Open Graph)** → une fois déposée, mettre à jour les
+  balises `<meta property="og:image">` et `<meta name="twitter:image">`
+  d'`index.html` avec le nouveau chemin `assets/images/social/...`.
 
-**Image de partage (Open Graph)** — une fois `og-cover.jpg` déposé, aucune
-autre modification n'est nécessaire : les balises `<meta property="og:image">`
-et `<meta name="twitter:image">` de `index.html` pointent déjà vers ce fichier.
+Une fois les fonctions de rendu basées sur `data/releases.json` mises en
+place (V1.2), les pochettes de `covers/` et l'image de `social/` (via
+`data/site.json` → `socialPreviewImage`) seront reliées automatiquement.
 
 ## Poids et performance
 
 Compresser toutes les images avant intégration (TinyPNG, Squoosh, ou
-équivalent) et privilégier le format `.webp` avec fallback `.jpg` si possible,
-pour préserver les temps de chargement du site.
+équivalent) et privilégier le format `.webp` avec fallback `.jpg` si
+possible, pour préserver les temps de chargement du site.

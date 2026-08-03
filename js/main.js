@@ -12,6 +12,7 @@
      7. Galerie : Lightbox
      8. Boutons flottants (Retour en haut)
      9. Année dynamique du footer
+    10. Fondations V1.2 — chargement des données (data/*.json)
    ========================================================================== */
 
 /**
@@ -41,7 +42,9 @@ document.addEventListener("DOMContentLoaded", () => {
   initLightbox();
   initBackToTop();
   initFooterYear();
+  initSiteData();
 });
+
 
 /* ---------- 1. Header : fond au scroll ---------- */
 function initHeaderScroll() {
@@ -275,3 +278,71 @@ function initFooterYear() {
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 }
+
+/* ==========================================================================
+   10. Fondations V1.2 — chargement des données (data/*.json)
+   ==========================================================================
+   Ce module charge les 6 fichiers JSON de la couche de données (artist,
+   socials, releases, videos, concerts, site) et les met à disposition via
+   `window.siteData`, préparant les prochaines évolutions du site.
+
+   IMPORTANT — portée volontairement limitée à ce stade :
+   Ce module NE MODIFIE AUCUN CONTENU AFFICHÉ. Il ne fait que charger et
+   vérifier les données ; aucune fonction de rendu n'est encore branchée sur
+   les sections existantes (Musique, Discographie, Concerts, Réseaux
+   sociaux…), qui restent alimentées par le HTML statique tant que le
+   contenu réel n'a pas été validé et intégré dans les fichiers JSON.
+
+   Quand le moment sera venu de connecter une section à ses données, la
+   marche à suivre est : écrire une fonction `renderXxx(data)` dédiée, qui
+   lit `window.siteData.xxx` et remplace le contenu statique correspondant —
+   section par section, sans toucher aux autres.
+   ========================================================================== */
+
+/**
+ * Charge un fichier JSON local et retourne son contenu déjà parsé.
+ * Chemin relatif exigé (compatibilité GitHub Pages / Netlify / Vercel,
+ * racine ou sous-dossier, sans modification).
+ */
+async function loadJSON(relativePath) {
+  const response = await fetch(relativePath, { cache: "no-cache" });
+  if (!response.ok) {
+    throw new Error(`Échec du chargement de "${relativePath}" (HTTP ${response.status})`);
+  }
+  return response.json();
+}
+
+/**
+ * Charge les 6 fichiers de la couche de données en parallèle.
+ * Chaque fichier est chargé indépendamment : l'échec de l'un n'empêche pas
+ * le chargement des autres (utile en phase de mise en place progressive du
+ * contenu, fichier par fichier).
+ */
+async function initSiteData() {
+  const sources = {
+    artist: "data/artist.json",
+    socials: "data/socials.json",
+    releases: "data/releases.json",
+    videos: "data/videos.json",
+    concerts: "data/concerts.json",
+    site: "data/site.json",
+  };
+
+  const entries = await Promise.all(
+    Object.entries(sources).map(async ([key, path]) => {
+      try {
+        const data = await loadJSON(path);
+        return [key, data];
+      } catch (error) {
+        console.warn(`[data] ${key} : ${error.message}`);
+        return [key, null];
+      }
+    })
+  );
+
+  window.siteData = Object.fromEntries(entries);
+
+  // Point d'ancrage pour les futures fonctions de rendu (V1.2 et suivantes).
+  // Ex. : if (window.siteData.releases?.releases.length) renderReleases(...);
+}
+

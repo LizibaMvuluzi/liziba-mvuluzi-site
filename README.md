@@ -51,19 +51,30 @@ cette étape — uniquement des retouches de finition.
 ├── robots.txt                  → indexation moteurs de recherche
 ├── sitemap.xml                 → plan du site pour Google Search Console
 ├── README.md                   → ce fichier
+├── CHANGELOG.md                → historique des versions du projet
 ├── /css
 │   └── style.css                → design system complet, commenté par section
 ├── /js
-│   └── main.js                  → interactions (nav, reveal, lightbox, formulaires…)
-├── /assets
-│   ├── /images                  → photos du site (voir README dédié)
-│   ├── /logos                   → logos, pack presse
-│   ├── /icons                   → favicon.svg, favicon-32.png, icon-192.png,
-│   │                              icon-512.png, apple-touch-icon.png
-│   ├── /fonts                   → réservé si des polices locales sont ajoutées
-│   └── /videos                  → réservé pour vidéos hébergées en local
-└── /pages                      → réservé pour d'éventuelles pages secondaires
-                                   (mentions légales, politique de confidentialité…)
+│   └── main.js                  → interactions (nav, reveal, lightbox, formulaires,
+│                                    chargement de la couche de données — voir §12)
+├── /data                        → couche de données JSON (voir §12)
+│   ├── artist.json               → identité stable de l'artiste
+│   ├── socials.json               → profils généraux (réseaux + plateformes)
+│   ├── releases.json              → sorties musicales
+│   ├── videos.json                → clips et vidéos
+│   ├── concerts.json              → agenda
+│   └── site.json                  → configuration technique runtime
+└── /assets
+    ├── /images
+    │   ├── /hero                  → portrait(s) plein écran
+    │   ├── /gallery                → photos de la Galerie
+    │   ├── /covers                 → pochettes de sorties
+    │   ├── /press                  → visuels haute définition (kit presse)
+    │   └── /social                 → image de partage Open Graph / Twitter Card
+    ├── /logos                     → logo(s) officiels, déclinaisons
+    ├── /icons                     → favicon.svg, favicon-32.png, icon-192.png,
+    │                                 icon-512.png, apple-touch-icon.png
+    └── /downloads                 → biographie PDF, kit presse ZIP (public uniquement)
 ```
 
 Le site est actuellement une **page unique** (`index.html`) organisée en
@@ -72,6 +83,7 @@ pour un site d'artiste : navigation rapide, un seul temps de chargement,
 excellent pour le référencement d'une page d'accueil forte.
 
 ---
+
 
 ## 2. Déploiement
 
@@ -326,3 +338,49 @@ SEO* en mode Mobile. La structure actuelle (HTML sémantique, CSS/JS sans
 dépendance externe hors polices, lazy-loading vidéo, `prefers-reduced-motion`
 respecté, contrastes conformes) est conçue pour viser un score élevé sur les
 quatre catégories dès l'intégration des visuels définitifs.
+
+---
+
+## 12. Couche de données (`data/`) — fondations V1.2
+
+Le site repose désormais sur une architecture de données JSON, pensée pour
+accueillir plusieurs années d'évolutions sans jamais avoir à restructurer le
+code. Historique complet des versions dans `CHANGELOG.md`.
+
+**Principe : une seule source de vérité par information.** Chaque fait (une
+sortie, un lien de plateforme, une date de concert) ne vit qu'à un seul
+endroit. Plus aucune information à mettre à jour à deux ou trois endroits
+différents du HTML.
+
+| Fichier | Rôle |
+|---|---|
+| `data/artist.json` | Identité stable : nom, titre artistique, accroche, genres, pays, contacts (email, téléphone, WhatsApp), logo. |
+| `data/socials.json` | Profils généraux : réseaux sociaux (`group: "social"`) et pages plateformes de streaming de l'artiste (`group: "streaming"`). |
+| `data/releases.json` | Sorties musicales — source unique pour les futures sections Nouveautés / Musique / Discographie. Contient, par sortie, le lien d'écoute propre à ce titre (≠ `socials.json`, qui reste général). |
+| `data/videos.json` | Clips et vidéos, avec référence optionnelle vers la sortie associée. |
+| `data/concerts.json` | Agenda des dates. Un tableau vide déclenche l'état « Aucune date annoncée ». |
+| `data/site.json` | Configuration technique consommée au runtime (couleur de thème, analytics, référence de domaine). Ne remplace jamais les balises `<meta>` statiques d'`index.html` (`canonical`, `og:*`, `twitter:*`), qui doivent rester lisibles par les robots n'exécutant pas JavaScript. |
+
+**État actuel : squelettes vides.** Les 6 fichiers existent avec leur
+structure complète et `"schemaVersion": 1`, mais sans contenu — à remplir
+progressivement, sortie après sortie, concert après concert.
+
+**Le JavaScript est prêt, mais rien n'est encore branché à l'affichage.**
+`js/main.js` charge automatiquement les 6 fichiers au démarrage de la page
+(fonction `initSiteData()`) et les met à disposition dans `window.siteData`.
+Aucune fonction de rendu n'existe encore : les sections du site restent
+alimentées par le HTML statique tel quel, jusqu'à ce que le contenu réel
+soit validé et que les fonctions d'affichage soient développées (prochaine
+étape : V1.2).
+
+**Comment ajouter du contenu dès maintenant, sans attendre le développement
+de l'affichage dynamique :**
+1. Renseigner les champs concernés dans le fichier JSON correspondant.
+2. Déposer les médias associés dans le sous-dossier `assets/` prévu (voir
+   `assets/images/README.md`).
+3. Committer et pousser via GitHub Desktop, comme pour toute autre mise à
+   jour du projet.
+
+Le contenu sera alors prêt et disponible dans `window.siteData` dès le
+chargement de la page — il ne sera simplement pas encore affiché tant que
+les fonctions de rendu des sections concernées n'auront pas été développées.
