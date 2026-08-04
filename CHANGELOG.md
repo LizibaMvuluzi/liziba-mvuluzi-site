@@ -11,6 +11,49 @@ ajustements, le nettoyage ou les corrections techniques.
 
 ---
 
+## [1.2.1] — 2026-08-04
+
+### Corrigé — affichage des médias déposés
+Après dépôt des premiers médias réels, plusieurs images ne s'affichaient
+pas. Cause : incohérence entre les extensions attendues par le code
+(figées en `.jpg` lors de l'architecture) et les extensions réelles des
+fichiers déposés.
+
+- `assets/images/covers/envie-des-choses.jpeg` → renommé `.jpg`.
+- `assets/images/covers/le-genereux-remix.jpeg` → renommé `.jpg`.
+- `assets/images/gallery/gallery-01.jpeg`, `gallery-02.jpeg`,
+  `gallery-04.jpeg` → renommés `.jpg` (format déjà correct, seule
+  l'extension était en cause).
+- `assets/images/gallery/gallery-03.png` → **converti** en JPEG réel et
+  renommé `gallery-03.jpg` (contrairement aux fichiers ci-dessus, celui-ci
+  était un vrai PNG : un simple renommage aurait laissé un fichier
+  corrompu pour le navigateur).
+- `assets/logos/logo.png` : le fichier déposé est une image raster, pas un
+  vectoriel. Plutôt que d'exiger un `.svg`, `data/artist.json`
+  (`brand.logo`) a été mis à jour pour référencer directement
+  `assets/logos/logo.png`.
+- `assets/videos/video-01.mp4.mp4`, `video-02.mp4.mp4` → double extension
+  corrigée (`video-01.mp4`, `video-02.mp4`). Cosmétique : ce dossier n'est
+  pas connecté à l'affichage (voir `assets/images/README.md`).
+- Portrait Hero (`.hero__portrait-frame`, `css/style.css`) : aucune erreur
+  trouvée (fichier et chemin déjà corrects), mais la règle a été simplifiée
+  par précaution — l'empilement à 3 calques `background-image` en une
+  seule déclaration (fragile : un décalage entre les listes
+  `background-image`/`-position`/`-size`/`-repeat` casse silencieusement
+  le rendu) a été remplacé par le même pattern éprouvé que
+  `.featured-release__art` : un calque photo simple sur l'élément, le
+  dégradé déplacé sur `::before`. Aucun changement visuel attendu.
+
+### Vérifié
+- Les 9 chemins médias (Hero, 3 pochettes, 4 photos galerie, logo)
+  référencés par le code résolvent désormais vers un fichier réellement
+  présent, au format annoncé par son extension.
+- JSON (6 fichiers), CSS et JavaScript revalidés après correction.
+- `assets/images/social/og-cover.jpg` toujours absent — non fourni dans ce
+  dépôt de médias, hors périmètre de ce correctif.
+
+---
+
 ## [1.2.0] — 2026-08-03
 
 Version majeure : le site passe d'un contenu entièrement statique à un
