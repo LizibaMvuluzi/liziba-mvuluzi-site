@@ -163,8 +163,15 @@ input, textarea, select { font: inherit; color: inherit; }
   padding-top: 0.85rem; padding-bottom: 0.85rem;
   border-bottom-color: var(--ligne);
 }
+.site-header.is-scrolled .nav__mark-logo { height: 34px; }
 .nav { display: flex; align-items: center; justify-content: space-between; max-width: var(--container); margin: 0 auto; }
-.nav__mark-glyph { font-family: var(--font-display); font-size: 1.35rem; letter-spacing: 0.04em; color: var(--blanc-casse); }
+.nav__mark { display: inline-flex; align-items: center; }
+.nav__mark-logo {
+  display: block; height: 42px; width: auto;
+  filter: drop-shadow(0 2px 10px rgba(0,0,0,0.5));
+  transition: transform 0.4s var(--ease), filter 0.4s var(--ease);
+}
+.nav__mark:hover .nav__mark-logo { transform: scale(1.06); filter: drop-shadow(0 2px 14px rgba(212,175,55,0.35)); }
 .nav__menu { display: flex; align-items: center; gap: clamp(0.9rem, 1.6vw, 1.7rem); }
 .nav__menu a {
   display: inline-flex; align-items: center;
@@ -194,8 +201,14 @@ input, textarea, select { font: inherit; color: inherit; }
   background-color: #0d0d0a;
   background-image: url("../assets/images/hero/hero-portrait.jpg");
   background-repeat: no-repeat;
-  background-position: center 20%;
+  background-position: 68% 15%;
   background-size: cover;
+}
+@media (max-width: 1079px) {
+  .hero__portrait-frame { background-position: 74% 14%; }
+}
+@media (max-width: 760px) {
+  .hero__portrait-frame { background-position: 82% 12%; }
 }
 .hero__portrait-frame::before {
   content: ""; position: absolute; inset: 0;
@@ -243,7 +256,7 @@ input, textarea, select { font: inherit; color: inherit; }
   color: var(--or); margin-top: 1.6rem;
 }
 .hero__rule { display: inline-block; width: 44px; height: 1px; background: var(--or); }
-.hero__baseline { margin-top: 1.3rem; max-width: 42ch; color: var(--gris); font-size: 1.02rem; }
+.hero__baseline { margin-top: 1.3rem; max-width: 52ch; color: var(--gris); font-size: 1.02rem; }
 .hero__baseline strong { color: var(--blanc-casse); font-weight: 500; }
 .hero__actions { display: flex; gap: 1rem; margin-top: 2.8rem; flex-wrap: wrap; }
 

@@ -11,6 +11,23 @@ ajustements, le nettoyage ou les corrections techniques.
 
 ---
 
+## [1.2.2] — 2026-08-04
+
+### Modifié
+- Bannière Hero remplacée par la nouvelle photo fournie (convertie en JPEG
+  optimisé, `assets/images/hero/hero-portrait.jpg`). Cadrage
+  `background-position` ajusté par palier responsive (desktop/tablette/
+  mobile) pour garder le sujet — positionné à droite du cadre — visible
+  malgré le fort recadrage horizontal en format portrait.
+- Logo officiel (`assets/logos/logo.png`) intégré dans le Header à la
+  place du bloc texte « LM », avec effet de survol et réduction cohérente
+  au scroll. Favicon et manifest volontairement laissés inchangés : le
+  logo (détaillé, forme médiator) perdrait toute lisibilité aux tailles
+  réduites d'une favicon.
+- Signature Hero remplacée par la formulation définitive fournie.
+
+---
+
 ## [1.2.1] — 2026-08-04
 
 ### Corrigé — affichage des médias déposés
