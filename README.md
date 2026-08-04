@@ -341,46 +341,50 @@ quatre catégories dès l'intégration des visuels définitifs.
 
 ---
 
-## 12. Couche de données (`data/`) — fondations V1.2
+## 12. Couche de données (`data/`) — rendu dynamique actif (V1.2)
 
-Le site repose désormais sur une architecture de données JSON, pensée pour
-accueillir plusieurs années d'évolutions sans jamais avoir à restructurer le
-code. Historique complet des versions dans `CHANGELOG.md`.
+Le site repose sur une architecture de données JSON, pensée pour accueillir
+plusieurs années d'évolutions sans jamais avoir à restructurer le code.
+Historique complet des versions dans `CHANGELOG.md`.
 
 **Principe : une seule source de vérité par information.** Chaque fait (une
 sortie, un lien de plateforme, une date de concert) ne vit qu'à un seul
 endroit. Plus aucune information à mettre à jour à deux ou trois endroits
 différents du HTML.
 
-| Fichier | Rôle |
-|---|---|
-| `data/artist.json` | Identité stable : nom, titre artistique, accroche, genres, pays, contacts (email, téléphone, WhatsApp), logo. |
-| `data/socials.json` | Profils généraux : réseaux sociaux (`group: "social"`) et pages plateformes de streaming de l'artiste (`group: "streaming"`). |
-| `data/releases.json` | Sorties musicales — source unique pour les futures sections Nouveautés / Musique / Discographie. Contient, par sortie, le lien d'écoute propre à ce titre (≠ `socials.json`, qui reste général). |
-| `data/videos.json` | Clips et vidéos, avec référence optionnelle vers la sortie associée. |
-| `data/concerts.json` | Agenda des dates. Un tableau vide déclenche l'état « Aucune date annoncée ». |
-| `data/site.json` | Configuration technique consommée au runtime (couleur de thème, analytics, référence de domaine). Ne remplace jamais les balises `<meta>` statiques d'`index.html` (`canonical`, `og:*`, `twitter:*`), qui doivent rester lisibles par les robots n'exécutant pas JavaScript. |
+| Fichier | Rôle | Sections alimentées |
+|---|---|---|
+| `data/artist.json` | Identité stable : nom, titre artistique, accroche, genres, pays, contacts, logo. | Bouton WhatsApp flottant ; liens email/téléphone (Booking, Presse, Contact) — mis à jour uniquement si le champ correspondant est renseigné. |
+| `data/socials.json` | Profils généraux : réseaux sociaux (`group: "social"`) et pages plateformes de streaming (`group: "streaming"`). | Grille de plateformes (Musique), grille Réseaux sociaux. |
+| `data/releases.json` | Sorties musicales — source unique. Lien d'écoute propre à chaque titre (≠ `socials.json`, qui reste général). | Nouveautés, titre à la une (Musique), Discographie. |
+| `data/videos.json` | Clips et vidéos, avec référence optionnelle vers la sortie associée (`relatedReleaseId`). | Section Vidéos ; lien « Voir le clip » dans les cartes Nouveautés. |
+| `data/concerts.json` | Agenda des dates. Tableau vide → état « Aucune date annoncée » conservé automatiquement. | Section Concerts / Agenda. |
+| `data/site.json` | Configuration technique runtime (couleur de thème, analytics, référence de domaine). Ne remplace jamais les balises `<meta>` statiques d'`index.html`. | — (référence documentée uniquement). |
 
-**État actuel : squelettes vides.** Les 6 fichiers existent avec leur
-structure complète et `"schemaVersion": 1`, mais sans contenu — à remplir
-progressivement, sortie après sortie, concert après concert.
+**Le rendu dynamique est actif.** `js/main.js` charge les 6 fichiers au
+démarrage (`initSiteData()`) puis peuple automatiquement : Nouveautés,
+titre à la une, grille de plateformes, Discographie, Vidéos, Réseaux
+sociaux, Agenda, et les liens de contact/WhatsApp quand ils sont renseignés.
 
-**Le JavaScript est prêt, mais rien n'est encore branché à l'affichage.**
-`js/main.js` charge automatiquement les 6 fichiers au démarrage de la page
-(fonction `initSiteData()`) et les met à disposition dans `window.siteData`.
-Aucune fonction de rendu n'existe encore : les sections du site restent
-alimentées par le HTML statique tel quel, jusqu'à ce que le contenu réel
-soit validé et que les fonctions d'affichage soient développées (prochaine
-étape : V1.2).
+**Principe de non-régression : jamais destructif.** Si une donnée est
+absente ou vide (ex. `concerts.json` vide, un email non renseigné), le
+contenu statique déjà présent dans `index.html` reste affiché tel quel —
+aucune section ne peut se retrouver vidée par une donnée manquante.
 
-**Comment ajouter du contenu dès maintenant, sans attendre le développement
-de l'affichage dynamique :**
-1. Renseigner les champs concernés dans le fichier JSON correspondant.
-2. Déposer les médias associés dans le sous-dossier `assets/` prévu (voir
-   `assets/images/README.md`).
-3. Committer et pousser via GitHub Desktop, comme pour toute autre mise à
-   jour du projet.
+**Icônes de plateformes.** Les rendus de `socials.json` (grille Musique et
+Réseaux sociaux) utilisent des icônes SVG locales stockées dans
+`assets/icons/platforms/` (`facebook.svg`, `instagram.svg`, `tiktok.svg`,
+`youtube.svg`, `spotify.svg`, `apple-music.svg`, `deezer.svg`, `tidal.svg`,
+`amazon-music.svg`, `whatsapp.svg`) — dessinées au style ligne fine du
+reste du site (`currentColor`), aucune dépendance CDN. Chargées une seule
+fois puis mises en cache par `js/main.js`.
 
-Le contenu sera alors prêt et disponible dans `window.siteData` dès le
-chargement de la page — il ne sera simplement pas encore affiché tant que
-les fonctions de rendu des sections concernées n'auront pas été développées.
+**Comment ajouter ou modifier du contenu, sans jamais toucher au code :**
+1. Modifier le fichier JSON concerné (ajouter une sortie, un concert, un lien).
+2. Déposer les médias associés dans le sous-dossier `assets/` prévu — voir
+   le tableau complet dans `assets/images/README.md`.
+3. Committer et pousser via GitHub Desktop.
+
+Le nouveau contenu s'affiche automatiquement au prochain chargement de la
+page, sans qu'aucun fichier `.html`, `.css` ou `.js` n'ait besoin d'être
+modifié.

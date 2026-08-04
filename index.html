@@ -16,7 +16,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Liziba Mvuluzi — L'Agenceur">
 <meta property="og:description" content="Guitariste, auteur-compositeur, arrangeur. Créateur de La Mbokalisation. Il fait dialoguer les héritages d'Afrique centrale avec les outils contemporains pour transmettre le patrimoine culturel aux générations futures.">
-<meta property="og:image" content="https://lizibamvuluzi.github.io/liziba-mvuluzi-site/assets/images/og-cover.jpg">
+<meta property="og:image" content="https://lizibamvuluzi.github.io/liziba-mvuluzi-site/assets/images/social/og-cover.jpg">
 <meta property="og:image:alt" content="Liziba Mvuluzi — L'Agenceur, guitariste et auteur-compositeur">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -28,7 +28,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Liziba Mvuluzi — L'Agenceur">
 <meta name="twitter:description" content="Guitariste, auteur-compositeur, arrangeur. Créateur de La Mbokalisation.">
-<meta name="twitter:image" content="https://lizibamvuluzi.github.io/liziba-mvuluzi-site/assets/images/og-cover.jpg">
+<meta name="twitter:image" content="https://lizibamvuluzi.github.io/liziba-mvuluzi-site/assets/images/social/og-cover.jpg">
 <meta name="twitter:image:alt" content="Liziba Mvuluzi — L'Agenceur, guitariste et auteur-compositeur">
 
 <!-- ===== Favicon / PWA ===== -->
@@ -56,7 +56,7 @@
   "name": "Liziba Mvuluzi",
   "alternateName": ["Rhudy Joseph Ndinga", "L'Agenceur"],
   "url": "https://lizibamvuluzi.github.io/liziba-mvuluzi-site/",
-  "image": "https://lizibamvuluzi.github.io/liziba-mvuluzi-site/assets/images/og-cover.jpg",
+  "image": "https://lizibamvuluzi.github.io/liziba-mvuluzi-site/assets/images/social/og-cover.jpg",
   "jobTitle": ["Guitariste", "Auteur-compositeur", "Arrangeur", "Directeur artistique"],
   "description": "Guitariste, auteur-compositeur et arrangeur. Créateur du langage musical La Mbokalisation, il fait dialoguer les héritages culturels d'Afrique centrale avec les outils contemporains.",
   "nationality": "Congolaise",
@@ -109,6 +109,7 @@
       <span></span><span></span><span></span>
     </button>
     <ul class="nav__menu" id="navMenu">
+      <li><a href="#nouveautes" data-nav>Nouveautés</a></li>
       <li><a href="#biographie" data-nav>Biographie</a></li>
       <li><a href="#musique" data-nav>Musique</a></li>
       <li><a href="#videos" data-nav>Vidéos</a></li>
@@ -134,7 +135,7 @@
   </div>
 
   <div class="hero__portrait">
-    <!-- TODO : remplacer par le vrai portrait — /assets/images/hero-portrait.jpg (min. 1800×2400px) -->
+    <!-- Portrait câblé en CSS (.hero__portrait-frame) — déposer hero-portrait.jpg dans /assets/images/hero/ -->
     <div class="hero__portrait-frame" role="img" aria-label="Portrait de Liziba Mvuluzi, guitare en main"></div>
   </div>
 
@@ -158,12 +159,29 @@
 </section>
 
 <!-- ================================================================
+     NOUVEAUTÉS — générée dynamiquement depuis data/releases.json
+     (les 2 sorties les plus récentes ; voir js/main.js → renderNouveautes)
+     ================================================================ -->
+<section class="section nouveautes" id="nouveautes" aria-labelledby="nouveautes-title">
+  <div class="section__inner">
+    <div class="section__head reveal">
+      <p class="eyebrow">01 — Nouveautés</p>
+      <h2 id="nouveautes-title" class="section__title">Dernières sorties</h2>
+      <p class="section__intro">Les deux titres les plus récents, mis à jour automatiquement.</p>
+    </div>
+
+    <!-- Contenu injecté par js/main.js (renderNouveautes) à partir de data/releases.json -->
+    <div class="news-grid" id="newsGrid" aria-live="polite"></div>
+  </div>
+</section>
+
+<!-- ================================================================
      2. BIOGRAPHIE COMPLÈTE
      ================================================================ -->
 <section class="section biographie" id="biographie" aria-labelledby="bio-title">
   <div class="section__inner apropos__grid">
     <div class="apropos__label reveal">
-      <p class="eyebrow">01 — Biographie</p>
+      <p class="eyebrow">02 — Biographie</p>
       <div class="apropos__thread" aria-hidden="true"></div>
     </div>
 
@@ -255,60 +273,26 @@
 <section class="section musique" id="musique" aria-labelledby="musique-title">
   <div class="section__inner">
     <div class="section__head reveal">
-      <p class="eyebrow">02 — Musique</p>
+      <p class="eyebrow">03 — Musique</p>
       <h2 id="musique-title" class="section__title">Écouter</h2>
       <p class="section__intro">Le dernier titre, et toutes les plateformes pour suivre la suite.</p>
     </div>
 
-    <!-- Titre à la une -->
-    <div class="featured-release reveal">
-      <div class="featured-release__art" aria-hidden="true"></div>
+    <!-- Titre à la une — rendu dynamiquement depuis data/releases.json (renderFeaturedRelease) -->
+    <div class="featured-release reveal" id="featuredRelease">
+      <div class="featured-release__art" id="featuredReleaseArt" aria-hidden="true"></div>
       <div class="featured-release__body">
         <span class="eyebrow">Dernière sortie</span>
-        <h3 class="featured-release__title">Le Généreux Remix</h3>
-        <p class="featured-release__meta">feat. Afara Tsena — Single — 23 mai 2026</p>
-        <p class="featured-release__desc">Sorti sous le label « Liziba Mvuluzi Remix », disponible sur l'ensemble des plateformes de streaming et de téléchargement.</p>
-        <a href="#" class="btn btn--gold" target="_blank" rel="noopener">Écouter le titre</a>
+        <h3 class="featured-release__title" id="featuredReleaseTitle">Le Généreux Remix</h3>
+        <p class="featured-release__meta" id="featuredReleaseMeta">Single</p>
+        <p class="featured-release__desc" id="featuredReleaseDesc">Dernière sortie officielle.</p>
+        <a href="#" class="btn btn--gold" id="featuredReleaseLink" target="_blank" rel="noopener">Écouter le titre</a>
       </div>
     </div>
 
-    <!-- Grille des plateformes -->
+    <!-- Grille des plateformes — rendue dynamiquement depuis data/socials.json (group: streaming) -->
     <h3 class="platforms__label reveal">Disponible sur</h3>
-    <div class="platforms">
-      <!-- TODO : remplacer chaque href="#" par le lien réel de la plateforme -->
-      <a class="platform reveal" href="#" target="_blank" rel="noopener">
-        <span class="platform__name">Spotify</span>
-        <span class="platform__arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="platform reveal" href="#" target="_blank" rel="noopener">
-        <span class="platform__name">Apple Music</span>
-        <span class="platform__arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="platform reveal" href="#" target="_blank" rel="noopener">
-        <span class="platform__name">YouTube Music</span>
-        <span class="platform__arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="platform reveal" href="#" target="_blank" rel="noopener">
-        <span class="platform__name">Deezer</span>
-        <span class="platform__arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="platform reveal" href="#" target="_blank" rel="noopener">
-        <span class="platform__name">Amazon Music</span>
-        <span class="platform__arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="platform reveal" href="#" target="_blank" rel="noopener">
-        <span class="platform__name">Boomplay</span>
-        <span class="platform__arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="platform reveal" href="#" target="_blank" rel="noopener">
-        <span class="platform__name">Audiomack</span>
-        <span class="platform__arrow" aria-hidden="true">→</span>
-      </a>
-      <a class="platform reveal" href="#" target="_blank" rel="noopener">
-        <span class="platform__name">Bandcamp</span>
-        <span class="platform__arrow" aria-hidden="true">→</span>
-      </a>
-    </div>
+    <div class="platforms" id="platformsGrid"></div>
   </div>
 </section>
 
@@ -318,32 +302,13 @@
 <section class="section videos" id="videos" aria-labelledby="videos-title">
   <div class="section__inner">
     <div class="section__head reveal">
-      <p class="eyebrow">03 — Vidéos</p>
+      <p class="eyebrow">04 — Vidéos</p>
       <h2 id="videos-title" class="section__title">Regarder</h2>
       <p class="section__intro">Performances, sessions guitare et clips officiels.</p>
     </div>
 
-    <div class="video-grid">
-      <!-- TODO : remplacer VIDEO_ID_x par les identifiants YouTube réels -->
-      <div class="video-card reveal">
-        <div class="video-card__frame">
-          <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID_1" title="Liziba Mvuluzi — Session guitare Vibration YOKA" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <p class="video-card__caption">Session guitare — Vibration YOKA</p>
-      </div>
-      <div class="video-card reveal">
-        <div class="video-card__frame">
-          <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID_2" title="Liziba Mvuluzi — Le Généreux Remix feat. Afara Tsena" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <p class="video-card__caption">Le Généreux Remix — feat. Afara Tsena</p>
-      </div>
-      <div class="video-card reveal">
-        <div class="video-card__frame">
-          <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID_3" title="Liziba Mvuluzi — Live Mbokalisation" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <p class="video-card__caption">Live — Mbokalisation</p>
-      </div>
-    </div>
+    <!-- Contenu injecté par js/main.js (renderVideos) à partir de data/videos.json -->
+    <div class="video-grid" id="videoGrid" aria-live="polite"></div>
 
     <a class="link-more reveal" href="https://www.youtube.com/" target="_blank" rel="noopener">Voir toutes les vidéos sur YouTube →</a>
   </div>
@@ -355,19 +320,26 @@
 <section class="section galerie" id="galerie" aria-labelledby="galerie-title">
   <div class="section__inner">
     <div class="section__head reveal">
-      <p class="eyebrow">04 — Galerie</p>
+      <p class="eyebrow">05 — Galerie</p>
       <h2 id="galerie-title" class="section__title">Images</h2>
       <p class="section__intro">Scène, studio, portraits. Cliquer une image pour l'agrandir.</p>
     </div>
 
-    <!-- TODO : remplacer chaque figure par une vraie image (voir /assets/images/README.md) -->
+    <!-- Emplacements définitifs — déposer gallery-01.jpg à gallery-04.jpg dans /assets/images/gallery/
+         Ajuster data-caption et alt une fois le sujet de chaque photo connu. -->
     <div class="gallery" id="gallery">
-      <button class="gallery__item gallery__item--tall reveal" type="button" data-caption="Liziba Mvuluzi — Scène" aria-label="Agrandir la photo : Liziba Mvuluzi en scène"></button>
-      <button class="gallery__item reveal" type="button" data-caption="Liziba Mvuluzi — Studio" aria-label="Agrandir la photo : session studio"></button>
-      <button class="gallery__item reveal" type="button" data-caption="Vibration YOKA — Détail guitare" aria-label="Agrandir la photo : détail de la guitare"></button>
-      <button class="gallery__item gallery__item--wide reveal" type="button" data-caption="Concert — La Mbokalisation" aria-label="Agrandir la photo : concert"></button>
-      <button class="gallery__item reveal" type="button" data-caption="Portrait officiel" aria-label="Agrandir la photo : portrait officiel"></button>
-      <button class="gallery__item gallery__item--tall reveal" type="button" data-caption="Backstage" aria-label="Agrandir la photo : backstage"></button>
+      <button class="gallery__item reveal" type="button" data-caption="Liziba Mvuluzi — Scène">
+        <img src="assets/images/gallery/gallery-01.jpg" alt="Liziba Mvuluzi en scène" loading="lazy">
+      </button>
+      <button class="gallery__item reveal" type="button" data-caption="Liziba Mvuluzi — Studio">
+        <img src="assets/images/gallery/gallery-02.jpg" alt="Liziba Mvuluzi en session studio" loading="lazy">
+      </button>
+      <button class="gallery__item reveal" type="button" data-caption="Vibration YOKA — Détail guitare">
+        <img src="assets/images/gallery/gallery-03.jpg" alt="Détail de la guitare signature Vibration YOKA" loading="lazy">
+      </button>
+      <button class="gallery__item reveal" type="button" data-caption="Portrait officiel">
+        <img src="assets/images/gallery/gallery-04.jpg" alt="Portrait officiel de Liziba Mvuluzi" loading="lazy">
+      </button>
     </div>
   </div>
 </section>
@@ -378,7 +350,7 @@
 <section class="section discographie" id="discographie" aria-labelledby="disco-title">
   <div class="section__inner">
     <div class="section__head reveal">
-      <p class="eyebrow">05 — Discographie</p>
+      <p class="eyebrow">06 — Discographie</p>
       <h2 id="disco-title" class="section__title">Catalogue</h2>
       <p class="section__intro">L'ensemble des sorties officielles, mises à jour au fil des publications.</p>
     </div>
@@ -390,20 +362,8 @@
         <span role="columnheader">Type</span>
         <span role="columnheader">Écouter</span>
       </div>
-      <div class="discography__row" role="row">
-        <span role="cell" class="discography__year">2026</span>
-        <span role="cell" class="discography__title">Le Généreux Remix <em>(feat. Afara Tsena)</em></span>
-        <span role="cell" class="discography__type">Single</span>
-        <!-- TODO : lien d'écoute réel -->
-        <span role="cell"><a href="#" target="_blank" rel="noopener" class="discography__link">Écouter →</a></span>
-      </div>
-      <!-- TODO : ajouter ici les sorties précédentes et à venir, même structure de ligne -->
-      <div class="discography__row discography__row--placeholder" role="row">
-        <span role="cell" class="discography__year">—</span>
-        <span role="cell" class="discography__title">Prochaine sortie à annoncer</span>
-        <span role="cell" class="discography__type">—</span>
-        <span role="cell">—</span>
-      </div>
+      <!-- Lignes injectées par js/main.js (renderDiscography) à partir de data/releases.json -->
+      <div id="discographyBody" role="rowgroup"></div>
     </div>
   </div>
 </section>
@@ -414,27 +374,15 @@
 <section class="section concerts" id="concerts" aria-labelledby="concerts-title">
   <div class="section__inner">
     <div class="section__head reveal">
-      <p class="eyebrow">06 — Concerts</p>
+      <p class="eyebrow">07 — Concerts</p>
       <h2 id="concerts-title" class="section__title">Agenda</h2>
       <p class="section__intro">Prochaines dates et représentations publiques.</p>
     </div>
 
-    <!--
-      TODO : dès qu'une date est confirmée, dupliquer un bloc .agenda__item
-      selon le modèle commenté ci-dessous et le placer avant l'état vide.
-
-      <article class="agenda__item reveal">
-        <div class="agenda__date"><span class="agenda__day">14</span><span class="agenda__month">Nov</span></div>
-        <div class="agenda__info">
-          <h3 class="agenda__title">Nom de la salle / du festival</h3>
-          <p class="agenda__place">Ville, Pays</p>
-        </div>
-        <a href="#" class="btn btn--ghost btn--sm" target="_blank" rel="noopener">Billetterie</a>
-      </article>
-    -->
-
-    <div class="agenda reveal">
-      <div class="agenda__empty">
+    <!-- Rendu dynamique par js/main.js (renderConcerts) à partir de data/concerts.json :
+         tableau vide → état ci-dessous conservé ; sinon, remplacé par les dates réelles. -->
+    <div class="agenda reveal" id="agenda">
+      <div class="agenda__empty" id="agendaEmpty">
         <p>Aucune date n'est annoncée pour le moment.</p>
         <p class="agenda__empty-sub">Pour organiser une date, une résidence ou un événement privé :</p>
         <a href="#booking" class="btn btn--gold">Faire une demande de booking</a>
@@ -449,7 +397,7 @@
 <section class="section booking" id="booking" aria-labelledby="booking-title">
   <div class="section__inner booking__grid">
     <div class="booking__intro reveal">
-      <p class="eyebrow">07 — Booking</p>
+      <p class="eyebrow">08 — Booking</p>
       <h2 id="booking-title" class="section__title">Programmer<br>une date</h2>
       <p class="section__text">
         Concerts, événements privés, résidences ou collaborations —
@@ -459,7 +407,7 @@
       <div class="booking__direct reveal">
         <span class="fact__label">Contact direct booking</span>
         <!-- TODO : email dédié au booking -->
-        <a href="mailto:booking@lizibamvuluzi.com" class="contact__link contact__link--sm">booking@lizibamvuluzi.com</a>
+        <a href="mailto:booking@lizibamvuluzi.com" id="bookingEmailLink" class="contact__link contact__link--sm">booking@lizibamvuluzi.com</a>
       </div>
     </div>
 
@@ -516,7 +464,7 @@
 <section class="section presse" id="presse" aria-labelledby="presse-title">
   <div class="section__inner presse__grid">
     <div class="reveal">
-      <p class="eyebrow">08 — Presse</p>
+      <p class="eyebrow">09 — Presse</p>
       <h2 id="presse-title" class="section__title">Kit presse</h2>
       <p class="section__text">
         Biographie, visuels haute définition et éléments de langage à
@@ -537,7 +485,7 @@
       <div class="presse__contact">
         <span class="fact__label">Contact presse</span>
         <!-- TODO : email dédié presse -->
-        <a href="mailto:presse@lizibamvuluzi.com" class="contact__link contact__link--sm">presse@lizibamvuluzi.com</a>
+        <a href="mailto:presse@lizibamvuluzi.com" id="pressEmailLink" class="contact__link contact__link--sm">presse@lizibamvuluzi.com</a>
       </div>
     </div>
   </div>
@@ -549,37 +497,12 @@
 <section class="section reseaux" id="reseaux" aria-labelledby="reseaux-title">
   <div class="section__inner">
     <div class="section__head reveal">
-      <p class="eyebrow">09 — Réseaux sociaux</p>
+      <p class="eyebrow">10 — Réseaux sociaux</p>
       <h2 id="reseaux-title" class="section__title">Suivre L'Agenceur</h2>
     </div>
 
-    <!-- TODO : remplacer chaque href="#" par l'URL réelle du profil -->
-    <div class="socials-grid">
-      <a class="social-card reveal" href="#" target="_blank" rel="noopener">
-        <span class="social-card__name">Instagram</span>
-        <span class="social-card__cta">Suivre →</span>
-      </a>
-      <a class="social-card reveal" href="#" target="_blank" rel="noopener">
-        <span class="social-card__name">TikTok</span>
-        <span class="social-card__cta">Suivre →</span>
-      </a>
-      <a class="social-card reveal" href="#" target="_blank" rel="noopener">
-        <span class="social-card__name">Facebook</span>
-        <span class="social-card__cta">Suivre →</span>
-      </a>
-      <a class="social-card reveal" href="#" target="_blank" rel="noopener">
-        <span class="social-card__name">YouTube</span>
-        <span class="social-card__cta">S'abonner →</span>
-      </a>
-      <a class="social-card reveal" href="#" target="_blank" rel="noopener">
-        <span class="social-card__name">Threads</span>
-        <span class="social-card__cta">Suivre →</span>
-      </a>
-      <a class="social-card reveal" href="#" target="_blank" rel="noopener">
-        <span class="social-card__name">X (Twitter)</span>
-        <span class="social-card__cta">Suivre →</span>
-      </a>
-    </div>
+    <!-- Rendu par js/main.js (renderSocialCards) depuis data/socials.json (group: "social") -->
+    <div class="socials-grid" id="socialsGrid"></div>
   </div>
 </section>
 
@@ -589,12 +512,12 @@
 <section class="section contact" id="contact" aria-labelledby="contact-title">
   <div class="section__inner contact__grid">
     <div class="reveal">
-      <p class="eyebrow">10 — Contact</p>
+      <p class="eyebrow">11 — Contact</p>
       <h2 id="contact-title" class="section__title">Restons<br>en lien</h2>
       <div class="contact__details">
         <!-- TODO : coordonnées définitives -->
-        <a class="contact__link" href="mailto:contact@lizibamvuluzi.com">contact@lizibamvuluzi.com</a>
-        <a class="contact__link" href="tel:+33000000000">+33 0 00 00 00 00</a>
+        <a class="contact__link" id="contactEmailLink" href="mailto:contact@lizibamvuluzi.com">contact@lizibamvuluzi.com</a>
+        <a class="contact__link" id="contactPhoneLink" href="tel:+33000000000">+33 0 00 00 00 00</a>
       </div>
     </div>
 
@@ -663,7 +586,7 @@
      ÉLÉMENTS FLOTTANTS : WhatsApp, Retour en haut
      ================================================================ -->
 <!-- TODO : remplacer 33000000000 par le numéro WhatsApp réel (indicatif inclus, sans "+" ni espace) -->
-<a href="https://wa.me/33000000000" class="float-btn float-btn--whatsapp" target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp">
+<a href="https://wa.me/33000000000" id="whatsappFloatBtn" class="float-btn float-btn--whatsapp" target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp">
   <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.02 3C9.4 3 4 8.36 4 15c0 2.3.65 4.44 1.77 6.27L4 29l7.94-1.72A11.9 11.9 0 0 0 16.02 27C22.63 27 28 21.64 28 15S22.63 3 16.02 3zm0 21.7c-1.94 0-3.75-.55-5.29-1.5l-.38-.23-4.7 1.02 1.03-4.6-.25-.4A9.62 9.62 0 0 1 6.3 15c0-5.36 4.36-9.7 9.72-9.7 5.35 0 9.7 4.34 9.7 9.7s-4.35 9.7-9.7 9.7zm5.34-7.27c-.29-.15-1.73-.85-2-.95-.27-.1-.46-.15-.66.15-.2.29-.76.95-.93 1.14-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.61-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.57-.48-.49-.66-.5h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.44s1.05 2.83 1.2 3.03c.15.2 2.07 3.16 5.02 4.43.7.3 1.25.48 1.68.61.7.22 1.34.19 1.84.12.56-.08 1.73-.71 1.98-1.39.24-.68.24-1.27.17-1.39-.07-.12-.26-.2-.55-.34z"/></svg>
 </a>
 

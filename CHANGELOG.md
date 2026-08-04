@@ -11,85 +11,87 @@ ajustements, le nettoyage ou les corrections techniques.
 
 ---
 
-## [Non publié] — Fondations techniques V1.2
+## [1.2.0] — 2026-08-03
 
-En préparation. Aucune nouvelle section, aucun nouveau contenu, aucun média
-intégré à ce stade — uniquement la base technique destinée à accueillir les
-futures évolutions sans restructuration.
+Version majeure : le site passe d'un contenu entièrement statique à un
+rendu piloté par la couche de données `data/*.json`. Trois phases de travail
+consolidées ci-dessous.
 
-### Ajouté
-- Couche de données `data/` : `artist.json`, `socials.json`, `releases.json`,
-  `videos.json`, `concerts.json`, `site.json` — squelettes vides avec
-  `schemaVersion: 1`, prêts à être renseignés progressivement.
-- Arborescence `assets/` restructurée : `images/{hero,gallery,covers,press,social}`,
-  `logos/`, `downloads/` (en plus de `icons/` déjà existant).
-- Utilitaires JavaScript de chargement (`js/main.js`) : lecture asynchrone des
-  6 fichiers JSON au démarrage, avec gestion d'erreur individuelle par
-  fichier. Les données chargées sont mises à disposition pour les futurs
-  développements, sans encore modifier l'affichage des sections existantes.
-- Présent fichier `CHANGELOG.md`.
+### Phase 1 — Fondations techniques
+- Couche de données `data/` créée : `artist.json`, `socials.json`,
+  `releases.json`, `videos.json`, `concerts.json`, `site.json` —
+  squelettes avec `schemaVersion: 1`.
+- Arborescence `assets/` restructurée par usage :
+  `images/{hero,gallery,covers,press,social}`, `logos/`, `downloads/`.
+- Utilitaires JavaScript de chargement asynchrone des 6 fichiers JSON.
 
-### Principes actés pour la suite (architecture figée)
-- Séparation stricte : `socials.json` = profils généraux de l'artiste
-  (réseaux sociaux + pages plateformes) ; `releases.json` = lien d'écoute
-  propre à chaque sortie. Aucune duplication entre les deux.
-- `site.json` reste une configuration technique consommée au runtime
-  (analytics, référence de domaine) — il n'alimente jamais les balises
-  `<meta>` statiques critiques pour le SEO et le partage (`canonical`,
-  `og:*`, `twitter:*`), qui restent en dur dans `index.html` pour rester
-  lisibles par les robots qui n'exécutent pas JavaScript.
-- La biographie complète reste en HTML statique (texte unique, mise en
-  forme riche) — elle n'entre pas dans `artist.json`.
-- Tous les chemins (JSON, assets, manifest) restent relatifs, pour une
-  compatibilité totale entre GitHub Pages (racine ou sous-dossier), Netlify,
-  Vercel et un futur domaine personnalisé.
-- Aucun dossier `audio/`, aucun média lourd hébergé sur GitHub Pages, aucun
-  document confidentiel (contrat, rider) dans le dépôt public.
-
----
-
-## [Non publié] — Remplissage des données réelles (V1.2, contenu)
-
-Population des 4 fichiers JSON avec les données réelles communiquées.
-`concerts.json` et `site.json` inchangés (déjà corrects). **`index.html`,
-`css/style.css` et `js/main.js` non modifiés** — aucune fonction de rendu
-n'est encore branchée sur ces données (voir points ouverts ci-dessous).
-
-### Renseigné
-- `artist.json` : nom, nom civil, titre, slogan, genres, WhatsApp
-  (lien « click to chat » `wa.me/message/...`). Champs restants
-  (email, téléphone, pays) laissés vides, non communiqués à ce stade.
-- `socials.json` : 9 profils (Facebook, Instagram, TikTok, YouTube — `social` ;
-  Spotify, Apple Music, Deezer, TIDAL, Amazon Music — `streaming`).
+### Phase 2 — Remplissage des données réelles
+- `artist.json` : nom, nom civil, titre, slogan, genres, WhatsApp (lien
+  « click to chat »).
+- `socials.json` : 9 profils (Facebook, Instagram, TikTok, YouTube —
+  `social` ; Spotify, Apple Music, Deezer, TIDAL, Amazon Music — `streaming`).
 - `releases.json` : 3 sorties (« Le Généreux Remix », « Je l'aime de tout
-  mon cœur », « Envie des choses »), chacune avec son lien Spotify. Dates de
-  sortie et pochettes non encore communiquées (champs vides).
-- `videos.json` : 2 clips, reliés à leurs sorties respectives via
-  `relatedReleaseId`.
+  mon cœur », « Envie des choses »), chacune avec son lien Spotify et sa
+  pochette référencée.
+- `videos.json` : 2 clips, reliés à leurs sorties via `relatedReleaseId`.
 
-### Décisions techniques prises lors de la saisie
-- `releases[].id` et `videos[].id` n'étaient pas fournis explicitement :
-  slugs dérivés des titres, choisis pour correspondre aux références
-  croisées `videoId` / `relatedReleaseId` communiquées. Vérifiés cohérents
-  (aucune référence orpheline).
-- `contact.whatsapp` contient le lien complet (`https://wa.me/message/...`)
-  plutôt qu'un simple numéro — plus robuste que le format `wa.me/<numéro>`
-  initialement documenté. Le champ reste nommé `whatsapp`, seule sa
-  tolérance de format est étendue.
-- `releaseDate` laissé vide (`""`) pour les 3 sorties : en son absence,
-  l'ordre des sorties dans le tableau fait foi pour déterminer la plus
-  récente, jusqu'à ce que les dates réelles soient renseignées.
+### Phase 3 — Rendu dynamique, section Nouveautés, architecture médias finale
 
-### Points ouverts avant le branchement de l'affichage dynamique
-- Le champ `featuring` est laissé vide pour « Le Généreux Remix » : à
-  confirmer si le featuring doit y être ajouté.
-- Aucune section « Nouveautés » n'existe dans le HTML actuel (portée
-  différée depuis les fondations V1.2) — à trancher avant de rendre ce
-  comportement automatique.
-- Le rendu dynamique (lecture de `window.siteData` pour peupler Musique,
-  Discographie, Vidéos, Réseaux sociaux) reste à développer : les données
-  sont chargées et disponibles, mais rien n'est encore affiché à partir
-  d'elles.
+#### Ajouté
+- **Section Nouveautés** (nouvelle, ancrée `#nouveautes`) : affiche
+  automatiquement les 2 sorties les plus récentes de `releases.json`,
+  avec lien d'écoute et lien vers le clip associé le cas échéant.
+  Navigation et numérotation des sections (`01` à `11`) mises à jour en
+  conséquence.
+- **Moteur de rendu complet** (`js/main.js`) : `renderFeaturedRelease`,
+  `renderNouveautes`, `renderPlatforms`, `renderSocialCards`,
+  `renderDiscography`, `renderVideos`, `renderConcerts`,
+  `applyArtistContact`, chargeur/cache d'icônes SVG (`loadIcon`) — toutes
+  branchées dans `initSiteData()`. Principe de non-régression respecté :
+  une donnée absente laisse le contenu statique existant intact.
+- **10 icônes SVG locales de plateformes** (`assets/icons/platforms/`) :
+  Facebook, Instagram, TikTok, YouTube, Spotify, Apple Music, Deezer,
+  TIDAL, Amazon Music, WhatsApp — style ligne fine `currentColor`, aucune
+  dépendance CDN, cohérentes avec le design noir/or existant.
+- Dossier `assets/videos/` réservé (non connecté à une section — la
+  section Vidéos reste alimentée par YouTube via `videos.json`).
+- Galerie simplifiée à 4 emplacements définitifs (`gallery-01.jpg` à
+  `gallery-04.jpg`), avec vraies balises `<img>` et grille responsive
+  uniforme (remplace l'ancien système de tailles `--tall`/`--wide`).
+
+#### Modifié
+- Portrait Hero et pochette de la sortie à la une câblés en CSS avec repli
+  gradient gracieux tant que le fichier média n'est pas déposé.
+- Lightbox de la galerie : affiche désormais la vraie image cliquée
+  (correction du TODO laissé en phase 2).
+- Bouton WhatsApp flottant, liens email (Booking, Presse, Contact) et
+  téléphone : mis à jour dynamiquement depuis `artist.json` quand le champ
+  correspondant est renseigné, sinon le contenu statique est conservé.
+- Chemins d'image de partage (`og:image`, `twitter:image`, Schema.org
+  `image`) et commentaire du portrait Hero corrigés vers l'arborescence
+  définitive (`assets/images/social/`, `assets/images/hero/`).
+- `README.md` (section 12) et `assets/images/README.md` réécrits pour
+  documenter l'arborescence médias définitive et le rendu dynamique actif.
+
+#### Vérifié (audit final)
+- HTML : balises équilibrées, aucun ID dupliqué, aucune ancre orpheline.
+- CSS : accolades équilibrées.
+- JavaScript : syntaxe validée (`node --check`), tous les
+  `getElementById` correspondent à un `id` réel du HTML.
+- JSON : 6 fichiers valides, aucune référence croisée orpheline entre
+  `releases.json` et `videos.json`.
+- Icônes SVG : 10 fichiers valides.
+- Tous les chemins de médias référencés dans le code correspondent
+  exactement à l'arborescence définitive (voir tableau de dépôt dans la
+  réponse de livraison).
+- Tous les liens externes protégés par `rel="noopener"`.
+- `manifest.json`, `robots.txt`, `sitemap.xml` inchangés et toujours
+  cohérents avec l'URL GitHub Pages en vigueur.
+
+**Médias non inclus dans cette livraison**, par décision explicite : les
+dossiers et noms de fichiers exacts sont prêts à recevoir logo, photos,
+pochettes et vidéos sans aucune modification de code (voir tableau dans
+`assets/images/README.md`).
 
 ---
 
