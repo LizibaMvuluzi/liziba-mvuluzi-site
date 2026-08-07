@@ -57,6 +57,16 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/pages/fondements.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/pages/yoka-source-labs.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/pages/mentions-legales.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>

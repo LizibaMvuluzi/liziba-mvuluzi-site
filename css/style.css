@@ -18,8 +18,9 @@
     13. Contact
     14. Footer
     15. Boutons flottants (WhatsApp / Retour en haut)
-    16. Pages secondaires (légal, 404)
-    17. Responsive : navigation mobile
+    16. Pages manifeste (Fondements, YOKA Source Labs)
+    17. Pages secondaires (légal, 404)
+    18. Responsive : navigation mobile
    ========================================================================== */
 
 /* ---------- 1. Variables & reset ---------- */
@@ -172,7 +173,7 @@ input, textarea, select { font: inherit; color: inherit; }
   transition: transform 0.4s var(--ease), filter 0.4s var(--ease), height 0.4s var(--ease);
 }
 .nav__mark:hover .nav__mark-logo { transform: scale(1.06); filter: drop-shadow(0 2px 14px rgba(212,175,55,0.35)); }
-.nav__menu { display: flex; align-items: center; gap: clamp(0.9rem, 1.6vw, 1.7rem); }
+.nav__menu { display: flex; align-items: center; gap: clamp(0.7rem, 1.3vw, 1.4rem); }
 .nav__menu a {
   display: inline-flex; align-items: center;
   font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.05em;
@@ -613,7 +614,60 @@ input, textarea, select { font: inherit; color: inherit; }
   .float-btn--top { bottom: 5.6rem; }
 }
 
-/* ---------- 16. Pages secondaires (légal, 404) ---------- */
+/* ---------- 16. Pages manifeste (Fondements, YOKA Source Labs) ---------- */
+.manifesto-page { padding-top: clamp(8rem, 14vw, 11rem); }
+.manifesto-page__header { max-width: 62ch; margin-bottom: clamp(3rem, 8vw, 5rem); }
+.manifesto-page__intro { margin-top: 1.6rem; color: var(--gris); font-size: 1.05rem; max-width: 58ch; }
+.manifesto-page__intro strong { color: var(--blanc-casse); font-weight: 500; }
+
+.manifesto-grid { display: grid; grid-template-columns: 140px 1fr; gap: clamp(2rem, 6vw, 5rem); }
+.manifesto-grid__rail { position: relative; }
+.manifesto-grid__thread {
+  margin-top: 1.4rem; width: 1px; height: 100%; min-height: 320px;
+  background: linear-gradient(180deg, var(--or) 0%, var(--gris-fonce) 100%);
+  position: sticky; top: 8rem;
+}
+
+.pillar { padding: clamp(3rem, 7vw, 4.5rem) 0; border-top: 1px solid var(--ligne); }
+.pillar:first-child { padding-top: 0; border-top: none; }
+.pillar__index { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; color: var(--or-mat); display: block; margin-bottom: 1rem; }
+.pillar__name { font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 4.5vw, 2.8rem); color: var(--blanc-casse); margin-bottom: 1.4rem; }
+.pillar__tagline { font-family: var(--font-display); font-style: italic; font-size: clamp(1.25rem, 2.4vw, 1.6rem); color: var(--or-clair); margin-bottom: 1.4rem; }
+.pillar__verse { color: var(--blanc-casse); font-size: 1.05rem; line-height: 1.9; margin-bottom: 1.2rem; }
+.pillar__body p { color: var(--gris); font-size: 1.02rem; line-height: 1.8; max-width: 56ch; margin-bottom: 1.2rem; }
+.pillar__body p:last-child { margin-bottom: 0; }
+.pillar--coda { border-top: 2px solid var(--or); margin-top: 1rem; }
+.pillar--coda .pillar__index { color: var(--or); }
+
+.manifesto-quote {
+  margin: clamp(2.5rem, 6vw, 4rem) 0; padding: clamp(1.8rem, 4vw, 2.6rem) 0;
+  border-top: 1px solid var(--ligne); border-bottom: 1px solid var(--ligne);
+}
+.manifesto-quote__text {
+  font-family: var(--font-display); font-style: italic; font-weight: 400;
+  font-size: clamp(1.6rem, 3.5vw, 2.3rem); color: var(--blanc-casse); line-height: 1.4; max-width: 20ch;
+}
+.manifesto-quote__question { margin-top: 1.4rem; color: var(--gris); font-size: 0.98rem; }
+
+.doctrine { display: flex; flex-direction: column; }
+.doctrine__step {
+  display: flex; align-items: center; gap: 1.2rem; padding: 0.9rem 0 0.9rem 0.2rem;
+  border-left: 1px solid var(--gris-fonce); padding-left: 1.6rem; position: relative;
+}
+.doctrine__step::before {
+  content: ""; position: absolute; left: -4.5px; top: 50%; transform: translateY(-50%);
+  width: 8px; height: 8px; border-radius: 50%; background: var(--or);
+}
+.doctrine__step:last-child { border-left-color: transparent; }
+.doctrine__word { font-family: var(--font-display); font-size: clamp(1.15rem, 2.2vw, 1.4rem); color: var(--blanc-casse); }
+.doctrine__question { margin-top: 1.6rem; padding-left: 1.6rem; color: var(--gris); font-size: 0.98rem; }
+
+@media (max-width: 760px) {
+  .manifesto-grid { grid-template-columns: 1fr; }
+  .manifesto-grid__thread { display: none; }
+}
+
+/* ---------- 17. Pages secondaires (légal, 404) ---------- */
 .legal-page { padding-top: clamp(8rem, 14vw, 11rem); }
 .legal-page__header { max-width: 72ch; margin-bottom: clamp(2.5rem, 6vw, 4rem); }
 .legal-page__updated { margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em; color: var(--gris); }
@@ -638,7 +692,7 @@ input, textarea, select { font: inherit; color: inherit; }
 .error-page__title { font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 2.2rem); color: var(--blanc-casse); margin-top: 1rem; }
 .error-page__text { color: var(--gris); margin: 1rem 0 2.2rem; max-width: 46ch; }
 
-/* ---------- 17. Responsive : navigation mobile ---------- */
+/* ---------- 18. Responsive : navigation mobile ---------- */
 @media (max-width: 1080px) {
   .nav__toggle { display: flex; z-index: 501; }
   .nav__menu {

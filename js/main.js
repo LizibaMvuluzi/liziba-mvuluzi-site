@@ -591,6 +591,48 @@ function applyArtistContact(artistData) {
 }
 
 /**
+ * Google Analytics 4 — préparation uniquement, jamais d'identifiant fictif.
+ *
+ * Architecture : la mesure d'audience est entièrement pilotée par
+ * `data/site.json` (champ `analytics`), et non par un script codé en dur
+ * dans chaque page HTML. Avantage : le site comportant plusieurs pages
+ * avec header/footer dupliqués (voir README §13), un identifiant GA4 en
+ * dur devrait être répété dans chacune d'elles ; ici, un seul champ JSON
+ * suffit à l'activer partout, ou à confirmer qu'il n'est pas encore actif.
+ *
+ * POUR ACTIVER GA4 (dès que le Measurement ID sera disponible) :
+ * 1. Ouvrir data/site.json.
+ * 2. Renseigner : "analytics": { "provider": "ga4", "id": "G-XXXXXXXXXX" }
+ *    (remplacer par le Measurement ID réel, format "G-" suivi de
+ *    caractères alphanumériques).
+ * 3. Aucune autre modification n'est nécessaire — le script officiel
+ *    Google (gtag.js) est alors chargé automatiquement sur chaque page,
+ *    de façon asynchrone (aucun impact sur les performances tant qu'il
+ *    n'est pas configuré).
+ *
+ * Tant que `analytics.id` est `null` ou absent, cette fonction ne charge
+ * strictement rien : aucun script Google, aucun cookie, aucune requête
+ * réseau superflue.
+ */
+function initAnalytics(siteData) {
+  const analytics = siteData?.analytics;
+  if (!analytics || analytics.provider !== "ga4") return;
+
+  const id = analytics.id;
+  if (!id || typeof id !== "string" || !/^G-[A-Z0-9]+$/i.test(id)) return;
+
+  const gtagScript = document.createElement("script");
+  gtagScript.async = true;
+  gtagScript.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
+  document.head.appendChild(gtagScript);
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  gtag("js", new Date());
+  gtag("config", id);
+}
+
+/**
  * Charge un fichier JSON local et retourne son contenu déjà parsé.
  * Chemin relatif exigé (compatibilité GitHub Pages / Netlify / Vercel,
  * racine ou sous-dossier, sans modification).
@@ -632,7 +674,7 @@ async function initSiteData() {
   );
 
   window.siteData = Object.fromEntries(entries);
-  const { artist, socials, releases, videos, concerts } = window.siteData;
+  const { artist, socials, releases, videos, concerts, site } = window.siteData;
 
   try {
     renderFeaturedRelease(releases);
@@ -641,9 +683,11 @@ async function initSiteData() {
     renderVideos(videos);
     renderConcerts(concerts);
     applyArtistContact(artist);
+    initAnalytics(site);
     await Promise.all([renderPlatforms(socials), renderSocialCards(socials)]);
   } catch (error) {
     console.error("[render] Erreur lors du rendu dynamique :", error);
   }
 }
+
 

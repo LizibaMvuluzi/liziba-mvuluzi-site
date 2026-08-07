@@ -11,6 +11,71 @@ ajustements, le nettoyage ou les corrections techniques.
 
 ---
 
+## [1.4.0] — 2026-08-07 — Édition Fondatrice
+
+Première version du site à établir les fondements identitaires complets
+de l'univers de Liziba Mvuluzi. Aucune modification de l'identité
+graphique, aucune régression sur l'existant — uniquement les 4 points
+validés ci-dessous.
+
+### Ajouté
+- **Page « Les Fondements »** (`/pages/fondements.html`) — manifeste
+  officiel, textes intégrés fidèlement (aucune reformulation du sens) :
+  Liziba, Mvuluzi, L'Agenceur, El Rayo Del Creciente, La Guitare
+  Spirituelle. Publiée, indexable, reliée depuis la navigation.
+- **Page « YOKA Source Labs »** (`/pages/yoka-source-labs.html`) —
+  manifeste institutionnel officiel : le sens du nom (YOKA / SOURCE /
+  LABS), la devise, la doctrine en 7 étapes, la vision, la philosophie.
+  Textes intégrés fidèlement. Publiée, indexable, reliée depuis la
+  navigation.
+- **Nouveaux composants CSS réutilisables** (section 16 de `style.css`) :
+  `.pillar` (bloc identitaire : nom, tagline, vers poétiques groupées par
+  respiration de lecture), `.doctrine` (flux vertical à 7 étapes, reprend
+  le langage visuel déjà établi par la timeline de la Biographie),
+  `.manifesto-quote` (citation de marque). Mise en page à deux colonnes
+  (filet doré + contenu), cohérente avec la section Biographie existante.
+- **Architecture Google Analytics 4**, sans identifiant fictif : nouvelle
+  fonction `initAnalytics()` dans `js/main.js`, pilotée entièrement par
+  `data/site.json` (`analytics.provider` / `analytics.id`). Tant qu'aucun
+  Measurement ID réel n'est renseigné, strictement aucun script ni cookie
+  Google n'est chargé. Un seul champ JSON à renseigner suffira à activer
+  la mesure d'audience sur les 6 pages du site simultanément.
+- **Schema.org `WebPage`** ajouté sur les 4 pages secondaires (Fondements,
+  YOKA Source Labs, Mentions légales, Politique de confidentialité), en
+  complément de `Person`/`MusicGroup` déjà présents sur l'accueil.
+
+### Modifié
+- Navigation (header + footer, sur les 6 pages) : ajout des liens
+  « Fondements » et « YOKA Labs », positionnés après Concerts — cohérent
+  avec le chemin de lecture du site (l'Artiste → les Œuvres → les
+  Fondements → le Cabinet). Espacement de la nav légèrement resserré pour
+  accueillir les 2 entrées supplémentaires sans casser la mise en page
+  desktop.
+- `sitemap.xml` : ajout des 2 nouvelles pages publiées.
+- README : section SEO réécrite (couverture multi-pages, procédure
+  d'activation GA4, note de migration de domaine corrigée — l'ancienne
+  mention d'un domaine `.com` obsolète a été retirée) ; section 13
+  (architecture multi-pages) mise à jour : Fondements et YOKA Source Labs
+  ne sont plus documentées comme « réservées » mais comme publiées.
+
+### Vérifié (audit Google Search Console — préparation complète)
+- `robots.txt` : cohérent, `Allow: /`, aucune page à exclure (plus aucune
+  page brouillon depuis la publication de Fondements/YOKA).
+- `sitemap.xml` valide, toutes les URLs qu'il référence sont réellement
+  publiées et indexables (aucune URL `noindex` incluse).
+- Balise `canonical` unique et correcte sur chacune des 6 pages.
+- `<title>` et `<meta name="description">` uniques par page, aucune
+  duplication, longueurs vérifiées (description YOKA Source Labs
+  raccourcie sous 160 caractères).
+- Un seul `<h1>` par page (vérifié programmatiquement).
+- Crawl complet des liens internes des 6 pages : aucun lien cassé, aucune
+  ancre orpheline (y compris les ancres `../index.html#section` utilisées
+  depuis `/pages/`).
+- Tous les blocs Schema.org (7 au total sur le site) valident en JSON.
+- Tous les liens externes protégés par `rel="noopener"`.
+
+---
+
 ## [1.3.0] — 2026-08-06
 
 Release Candidate — première version publique officielle destinée à

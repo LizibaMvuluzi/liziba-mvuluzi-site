@@ -56,8 +56,8 @@ cette étape — uniquement des retouches de finition.
 ├── /pages                      → pages secondaires (voir §13)
 │   ├── mentions-legales.html
 │   ├── politique-confidentialite.html
-│   ├── fondements.html          → réservée, non publiée
-│   └── yoka-source-labs.html    → réservée, non publiée
+│   ├── fondements.html          → manifeste « Les Fondements » (publiée)
+│   └── yoka-source-labs.html    → manifeste « YOKA Source Labs » (publiée)
 ├── /css
 │   └── style.css                → design system complet, commenté par section
 ├── /js
@@ -209,24 +209,62 @@ si le site est un jour hébergé sur Netlify, l'attribut `data-netlify="true"`
 
 ---
 
-## 6. SEO — ce qui est déjà en place
+## 6. SEO — prêt pour Google Search Console
 
-- Balises meta complètes (`description`, `keywords`, `robots`, `canonical`).
-- Open Graph et Twitter Cards (partage réseaux sociaux avec aperçu).
-- Données structurées **Schema.org** : `Person` et `MusicGroup` (avec la
-  dernière sortie en `MusicRecording`), pour une meilleure compréhension par
-  Google (Knowledge Graph, résultats enrichis).
-- `robots.txt` et `sitemap.xml` prêts pour Google Search Console / Bing
-  Webmaster Tools (soumettre l'URL du sitemap après mise en ligne).
-- Titres hiérarchisés (`h1` unique sur le Hero, `h2` par section, `h3` pour
-  les sous-éléments) pour une structure sémantique claire.
+**Sur les 6 pages du site** (accueil, Fondements, YOKA Source Labs,
+Mentions légales, Politique de confidentialité, 404) :
+
+- Balises meta complètes (`description` unique et non dupliquée par page,
+  `robots`, `canonical` propre à chaque URL).
+- Open Graph et Twitter Cards (partage réseaux sociaux avec aperçu),
+  utilisant l'image `assets/images/social/og-cover.jpg`.
+- Données structurées **Schema.org** : `Person` et `MusicGroup` sur
+  l'accueil (avec la dernière sortie en `MusicRecording`) ; `WebPage` sur
+  les 4 pages secondaires.
+- `robots.txt` et `sitemap.xml` à jour, cohérents entre eux et avec les
+  URLs réellement publiées (aucune page brouillon, aucun lien mort).
+- Un seul `<h1>` par page ; hiérarchie `h2`/`h3` sémantique.
 - URLs d'ancre lisibles (`#biographie`, `#discographie`…) exploitables en
   partage direct vers une section précise.
+- Tous les liens internes vérifiés (aucun lien cassé, aucune ancre
+  orpheline) — voir CHANGELOG pour le détail de l'audit.
 
-**À faire après mise en ligne :** soumettre `sitemap.xml` dans Google Search
-Console, vérifier le rendu des Rich Results (outil de test Google), et
-remplacer les URLs `https://www.lizibamvuluzi.com/` par le domaine réel
-partout où elles apparaissent.
+**À faire après connexion du domaine définitif (`lizibamvuluzi.fr`) :**
+1. Remplacer `https://lizibamvuluzi.github.io/liziba-mvuluzi-site/` par
+   l'URL du domaine définitif dans les 6 pages (`canonical`, `og:url`,
+   Schema.org), `robots.txt`, `sitemap.xml` et `data/site.json`
+   (`baseUrl`) — même opération que le précédent passage GitHub Pages,
+   en sens inverse.
+2. Déclarer la propriété dans **Google Search Console**, soumettre
+   `sitemap.xml`, vérifier le rendu des Rich Results (outil de test
+   Google) pour `Person`/`MusicGroup`/`WebPage`.
+3. Activer **Google Analytics 4** — voir ci-dessous.
+
+### Google Analytics 4 — architecture prête, aucun identifiant fictif
+
+La mesure d'audience est pilotée par un seul champ, dans
+`data/site.json` :
+
+```json
+"analytics": { "provider": "ga4", "id": null }
+```
+
+Dès que le Measurement ID est disponible (format `G-XXXXXXXXXX`), le
+renseigner dans ce champ `id` — aucune autre modification n'est
+nécessaire. `js/main.js` (fonction `initAnalytics`) charge alors
+automatiquement le script officiel Google (`gtag.js`) sur chaque page, de
+façon asynchrone. Tant que `id` reste `null`, **aucun script, aucun
+cookie et aucune requête réseau** liés à Google Analytics ne sont chargés.
+
+Ce choix d'architecture (un champ JSON plutôt qu'un script dupliqué dans
+les 6 fichiers HTML) évite d'avoir à modifier chaque page individuellement
+le jour de l'activation, et évite tout aussi bien d'avoir à les modifier
+de nouveau si l'identifiant change.
+
+**Cookies et RGPD :** l'activation de Google Analytics constitue un dépôt
+de cookies de mesure d'audience. Un bandeau de consentement conforme
+RGPD devra être mis en place avant l'activation (voir
+`pages/politique-confidentialite.html`, qui l'anticipe déjà).
 
 ---
 
@@ -409,8 +447,8 @@ Le site est passé d'une page unique à une petite architecture multi-pages,
 └── /pages
     ├── mentions-legales.html
     ├── politique-confidentialite.html
-    ├── fondements.html                → réservée, sans contenu, non liée, noindex
-    └── yoka-source-labs.html          → réservée, sans contenu, non liée, noindex
+    ├── fondements.html                → manifeste, publiée (V1.4)
+    └── yoka-source-labs.html          → manifeste, publiée (V1.4)
 ```
 
 **Header et footer sont dupliqués** dans chaque fichier HTML (choix
@@ -422,17 +460,13 @@ logo, etc.) doit être répercutée manuellement dans les 6 fichiers HTML.
 l'attribut `data-base-path` sur la balise `<html>` : vide (`""`) à la
 racine, `"../"` depuis `/pages/`. À respecter pour toute nouvelle page.
 
-**Pages réservées (Fondements, YOKA Source Labs).** Structure HTML posée
-par anticipation (header/footer déjà en place, chemins déjà corrects),
-mais volontairement sans contenu et sans lien nulle part sur le site —
-conformément à la décision de ne pas publier de texte provisoire. Marquées
-`<meta name="robots" content="noindex, nofollow">`. Pour les publier au
-moment venu :
-1. Renseigner le contenu validé dans la section `<main>`.
-2. Retirer le `noindex, nofollow`.
-3. Ajouter un lien dans `<ul class="nav__menu">` (header) et
-   `<nav class="site-footer__nav">` (footer) — dans **les 6 fichiers HTML**.
-4. Ajouter l'URL dans `sitemap.xml`.
+**Les Fondements et YOKA Source Labs** sont les pages manifeste de
+l'Édition Fondatrice (V1.4) — textes officiels intégrés fidèlement,
+publiées et indexables (`index, follow`), reliées depuis la navigation
+(header et footer, sur les 6 pages). Composants CSS réutilisables :
+`.pillar` (bloc « pilier » : nom, tagline, vers poétiques), `.doctrine`
+(flux vertical en 7 étapes), `.manifesto-quote` (citation de marque) —
+voir `css/style.css`, section 16.
 
 **Mentions légales et politique de confidentialité** sont réellement
 publiées et indexables. Elles reposent sur les informations suivantes,
