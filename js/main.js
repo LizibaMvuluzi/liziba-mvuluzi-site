@@ -148,7 +148,69 @@ function initRevealOnScroll() {
   revealEls.forEach((el) => observer.observe(el));
 }
 
-/* ---------- 5. Formulaire Booking ---------- */
+/* ---------- 5. Formulaires : envoi réel via Web3Forms ---------- */
+/**
+ * Web3Forms — service gratuit sans backend, compatible hébergement
+ * 100% statique (GitHub Pages, Netlify, Vercel). Toutes les soumissions
+ * sont redirigées par e-mail vers lizibamvuluzi@gmail.com.
+ *
+ * CLÉ À CONFIGURER (une seule fois, ~2 minutes) :
+ * 1. Aller sur https://web3forms.com
+ * 2. Saisir lizibamvuluzi@gmail.com pour obtenir une clé d'accès gratuite
+ *    (aucune création de compte requise, clé envoyée par e-mail).
+ * 3. Remplacer la valeur ci-dessous par cette clé.
+ * Tant que la clé n'est pas renseignée, les formulaires affichent un
+ * message clair plutôt que d'échouer silencieusement.
+ */
+const WEB3FORMS_ACCESS_KEY = "REMPLACER_PAR_LA_CLE_WEB3FORMS";
+
+async function submitForm(form, status, subject) {
+  status.classList.remove("is-error");
+
+  if (!form.checkValidity()) {
+    status.textContent = "Merci de compléter les champs obligatoires.";
+    status.classList.add("is-error");
+    return;
+  }
+
+  if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY.startsWith("REMPLACER_")) {
+    status.textContent = "Formulaire non configuré pour l'instant — merci de contacter directement lizibamvuluzi@gmail.com.";
+    status.classList.add("is-error");
+    return;
+  }
+
+  const submitBtn = form.querySelector('button[type="submit"]');
+  if (submitBtn) submitBtn.disabled = true;
+  status.textContent = "Envoi en cours…";
+
+  const formData = new FormData(form);
+  formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+  formData.append("subject", subject);
+  formData.append("from_name", "Site officiel — Liziba Mvuluzi");
+
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData,
+    });
+    const result = await response.json();
+
+    if (result.success) {
+      status.classList.remove("is-error");
+      status.textContent = "Merci. Votre message a bien été transmis — une réponse vous parviendra rapidement.";
+      form.reset();
+    } else {
+      throw new Error(result.message || "Échec de l'envoi");
+    }
+  } catch (error) {
+    console.error("[formulaire] Échec de l'envoi :", error);
+    status.classList.add("is-error");
+    status.textContent = "Une erreur est survenue. Merci de réessayer, ou d'écrire directement à lizibamvuluzi@gmail.com.";
+  } finally {
+    if (submitBtn) submitBtn.disabled = false;
+  }
+}
+
 function initBookingForm() {
   const form = document.getElementById("bookingForm");
   const status = document.getElementById("bookingStatus");
@@ -156,22 +218,7 @@ function initBookingForm() {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-
-    if (!form.checkValidity()) {
-      status.textContent = "Merci de compléter les champs obligatoires.";
-      status.classList.add("is-error");
-      return;
-    }
-
-    const data = Object.fromEntries(new FormData(form).entries());
-
-    // TODO : remplacer ce console.log par un envoi réel (Formspree, EmailJS,
-    // fonction serverless Netlify/Vercel, ou tout endpoint de votre choix).
-    console.log("Demande de booking :", data);
-
-    status.classList.remove("is-error");
-    status.textContent = "Merci. Votre demande a bien été transmise — une réponse vous parviendra rapidement.";
-    form.reset();
+    submitForm(form, status, "Nouvelle demande de booking — Liziba Mvuluzi");
   });
 }
 
@@ -183,22 +230,7 @@ function initContactForm() {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-
-    if (!form.checkValidity()) {
-      status.textContent = "Merci de compléter les champs obligatoires.";
-      status.classList.add("is-error");
-      return;
-    }
-
-    const data = Object.fromEntries(new FormData(form).entries());
-
-    // TODO : remplacer ce console.log par un envoi réel (Formspree, EmailJS,
-    // fonction serverless Netlify/Vercel, ou tout endpoint de votre choix).
-    console.log("Message de contact :", data);
-
-    status.classList.remove("is-error");
-    status.textContent = "Message envoyé. Merci, une réponse vous parviendra rapidement.";
-    form.reset();
+    submitForm(form, status, "Nouveau message — Site officiel Liziba Mvuluzi");
   });
 }
 
@@ -288,13 +320,21 @@ function initFooterYear() {
    section n'est jamais vidée par erreur).
    ========================================================================== */
 
+/**
+ * Préfixe de chemin relatif — permet à ce même script d'être utilisé
+ * depuis la racine (index.html) comme depuis un sous-dossier (/pages/*.html).
+ * Défini via l'attribut data-base-path sur <html> ("" à la racine, "../"
+ * depuis /pages/).
+ */
+const BASE_PATH = document.documentElement.dataset.basePath || "";
+
 const ICON_CACHE = new Map();
 
 /** Charge et met en cache le SVG d'une icône de plateforme (fichier local). */
 async function loadIcon(id) {
   if (ICON_CACHE.has(id)) return ICON_CACHE.get(id);
   try {
-    const response = await fetch(`assets/icons/platforms/${id}.svg`, { cache: "force-cache" });
+    const response = await fetch(`${BASE_PATH}assets/icons/platforms/${id}.svg`, { cache: "force-cache" });
     const markup = response.ok ? await response.text() : "";
     ICON_CACHE.set(id, markup);
     return markup;
@@ -426,24 +466,32 @@ async function renderPlatforms(socialsData) {
 /* ---- Réseaux sociaux : cartes des profils généraux ---- */
 async function renderSocialCards(socialsData) {
   const grid = document.getElementById("socialsGrid");
-  if (!grid || !socialsData?.profiles?.length) return;
+  const footer = document.getElementById("footerSocials");
+  if ((!grid && !footer) || !socialsData?.profiles?.length) return;
 
   const social = socialsData.profiles.filter((p) => p.group === "social");
   if (!social.length) return;
 
-  const icons = await Promise.all(social.map((p) => loadIcon(p.id)));
+  if (grid) {
+    const icons = await Promise.all(social.map((p) => loadIcon(p.id)));
+    grid.innerHTML = social
+      .map((p, i) => {
+        const cta = p.id === "youtube" ? "S'abonner" : "Suivre";
+        return `
+        <a class="social-card" href="${p.url}" target="_blank" rel="noopener">
+          <span class="social-card__icon" aria-hidden="true">${icons[i]}</span>
+          <span class="social-card__name">${escapeHTML(p.label)}</span>
+          <span class="social-card__cta">${cta} →</span>
+        </a>`;
+      })
+      .join("");
+  }
 
-  grid.innerHTML = social
-    .map((p, i) => {
-      const cta = p.id === "youtube" ? "S'abonner" : "Suivre";
-      return `
-      <a class="social-card" href="${p.url}" target="_blank" rel="noopener">
-        <span class="social-card__icon" aria-hidden="true">${icons[i]}</span>
-        <span class="social-card__name">${escapeHTML(p.label)}</span>
-        <span class="social-card__cta">${cta} →</span>
-      </a>`;
-    })
-    .join("");
+  if (footer) {
+    footer.innerHTML = social
+      .map((p) => `<a href="${p.url}" target="_blank" rel="noopener">${escapeHTML(p.label)}</a>`)
+      .join("");
+  }
 }
 
 /* ---- Discographie : tableau complet ---- */
@@ -535,21 +583,10 @@ function applyArtistContact(artistData) {
       : `https://wa.me/${contact.whatsapp}`;
   }
 
-  const setEmail = (id, value) => {
-    const el = document.getElementById(id);
-    if (el && value) {
-      el.href = `mailto:${value}`;
-      el.textContent = value;
-    }
-  };
-  setEmail("bookingEmailLink", contact.emailBooking);
-  setEmail("pressEmailLink", contact.emailPress);
-  setEmail("contactEmailLink", contact.email);
-
-  const phoneEl = document.getElementById("contactPhoneLink");
-  if (phoneEl && contact.phone) {
-    phoneEl.href = `tel:${contact.phone.replace(/\s+/g, "")}`;
-    phoneEl.textContent = contact.phone;
+  const emailEl = document.getElementById("contactEmailLink");
+  if (emailEl && contact.email) {
+    emailEl.href = `mailto:${contact.email}`;
+    emailEl.textContent = contact.email;
   }
 }
 
@@ -574,12 +611,12 @@ async function loadJSON(relativePath) {
  */
 async function initSiteData() {
   const sources = {
-    artist: "data/artist.json",
-    socials: "data/socials.json",
-    releases: "data/releases.json",
-    videos: "data/videos.json",
-    concerts: "data/concerts.json",
-    site: "data/site.json",
+    artist: `${BASE_PATH}data/artist.json`,
+    socials: `${BASE_PATH}data/socials.json`,
+    releases: `${BASE_PATH}data/releases.json`,
+    videos: `${BASE_PATH}data/videos.json`,
+    concerts: `${BASE_PATH}data/concerts.json`,
+    site: `${BASE_PATH}data/site.json`,
   };
 
   const entries = await Promise.all(

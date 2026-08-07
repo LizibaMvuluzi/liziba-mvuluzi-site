@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr" data-base-path="../">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YOKA Source Labs — Liziba Mvuluzi</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0a0a08">
+
+<link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+<link rel="manifest" href="../manifest.json">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Work+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<header class="site-header" id="siteHeader">
+  <nav class="nav" aria-label="Navigation principale">
+    <a href="../index.html" class="nav__mark" aria-label="Liziba Mvuluzi — Retour à l'accueil">
+      <img src="../assets/logos/logo.png" alt="Liziba Mvuluzi" class="nav__mark-logo" width="47" height="47">
+    </a>
+    <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="Ouvrir le menu de navigation">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="../index.html#nouveautes" data-nav>Nouveautés</a></li>
+      <li><a href="../index.html#biographie" data-nav>Biographie</a></li>
+      <li><a href="../index.html#musique" data-nav>Musique</a></li>
+      <li><a href="../index.html#videos" data-nav>Vidéos</a></li>
+      <li><a href="../index.html#galerie" data-nav>Galerie</a></li>
+      <li><a href="../index.html#discographie" data-nav>Discographie</a></li>
+      <li><a href="../index.html#concerts" data-nav>Concerts</a></li>
+      <li><a href="../index.html#reseaux" data-nav>Réseaux</a></li>
+      <li><a href="../index.html#booking" data-nav>Booking</a></li>
+      <li><a href="../index.html#contact" class="nav__cta" data-nav>Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="contenu">
+<section class="section legal-page" aria-labelledby="draft-title">
+  <div class="section__inner">
+    <!--
+      RÉSERVÉ — architecture préparée par anticipation, page non publiée.
+      Organisation validée : Le sens du nom (YOKA / SOURCE / LABS) — Notre devise « La vibration vraie, la source pure. » — Notre doctrine (Créer → Protéger → Diffuser → Découvrir → Écouter → Rejoindre → Fidéliser) — Notre vision — Notre philosophie — Conclusion. Textes déjà validés pour YOKA et SOURCE disponibles dans le CHANGELOG ; LABS / vision / philosophie / conclusion restent à fournir.
+      Ne pas lier depuis la navigation tant que la rédaction définitive
+      n'est pas validée. Retirer le "noindex" du <meta name="robots"> ci-dessus
+      et ajouter le lien de navigation (header + footer) le jour de la
+      publication réelle.
+    -->
+    <div class="legal-page__header reveal">
+      <h1 id="draft-title" class="section__title">YOKA Source Labs</h1>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="site-footer__brand">
+      <span class="site-footer__mark">LIZIBA MVULUZI</span>
+      <span class="site-footer__tag">L'Agenceur</span>
+    </div>
+
+    <nav class="site-footer__nav" aria-label="Navigation du pied de page">
+      <a href="../index.html#biographie">Biographie</a>
+      <a href="../index.html#musique">Musique</a>
+      <a href="../index.html#discographie">Discographie</a>
+      <a href="../index.html#concerts">Concerts</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="mentions-legales.html">Mentions légales</a>
+      <a href="politique-confidentialite.html">Confidentialité</a>
+    </nav>
+
+    <div class="site-footer__socials" id="footerSocials"></div>
+
+    <div class="site-footer__legal">
+      <span class="site-footer__copy">© <span id="year"></span> YOKA SOURCE LABS — Site officiel de Liziba Mvuluzi</span>
+      <span class="site-footer__credit">Site conçu avec exigence — L'Agenceur.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================================================================
+     ÉLÉMENTS FLOTTANTS : WhatsApp, Retour en haut
+     ================================================================ -->
+<!-- Le href par défaut est un repli statique ; js/main.js (applyArtistContact) le met à jour depuis data/artist.json au chargement. -->
+<a href="https://wa.me/message/D6UYXL7U7JS4K1" id="whatsappFloatBtn" class="float-btn float-btn--whatsapp" target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp">
+  <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.02 3C9.4 3 4 8.36 4 15c0 2.3.65 4.44 1.77 6.27L4 29l7.94-1.72A11.9 11.9 0 0 0 16.02 27C22.63 27 28 21.64 28 15S22.63 3 16.02 3zm0 21.7c-1.94 0-3.75-.55-5.29-1.5l-.38-.23-4.7 1.02 1.03-4.6-.25-.4A9.62 9.62 0 0 1 6.3 15c0-5.36 4.36-9.7 9.72-9.7 5.35 0 9.7 4.34 9.7 9.7s-4.35 9.7-9.7 9.7zm5.34-7.27c-.29-.15-1.73-.85-2-.95-.27-.1-.46-.15-.66.15-.2.29-.76.95-.93 1.14-.17.2-.34.22-.63.07-.29-.15-1.22-.45-2.32-1.43-.86-.76-1.44-1.71-1.61-2-.17-.29-.02-.45.13-.6.13-.13.29-.34.44-.51.15-.17.2-.29.29-.49.1-.2.05-.37-.02-.51-.07-.15-.66-1.59-.9-2.18-.24-.57-.48-.49-.66-.5h-.56c-.2 0-.51.07-.78.37-.27.29-1.02 1-1.02 2.44s1.05 2.83 1.2 3.03c.15.2 2.07 3.16 5.02 4.43.7.3 1.25.48 1.68.61.7.22 1.34.19 1.84.12.56-.08 1.73-.71 1.98-1.39.24-.68.24-1.27.17-1.39-.07-.12-.26-.2-.55-.34z"/></svg>
+</a>
+
+<button type="button" class="float-btn float-btn--top" id="backToTop" aria-label="Retour en haut de page">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 5l-7 7h4v7h6v-7h4z"/></svg>
+</button>
+
+<!-- ================================================================
+     LIGHTBOX GALERIE
+     ================================================================ -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Visionneuse d'image" hidden>
+  <button type="button" class="lightbox__close" id="lightboxClose" aria-label="Fermer la visionneuse">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M5 5l14 14M19 5L5 19"/></svg>
+  </button>
+  <button type="button" class="lightbox__prev" id="lightboxPrev" aria-label="Image précédente">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M15 5l-7 7 7 7"/></svg>
+  </button>
+  <div class="lightbox__stage">
+    <div class="lightbox__image" id="lightboxImage" role="img"></div>
+    <p class="lightbox__caption" id="lightboxCaption"></p>
+  </div>
+  <button type="button" class="lightbox__next" id="lightboxNext" aria-label="Image suivante">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+  </button>
+</div>
+
+
+
+<script src="../js/main.js" defer></script>
+</body>
+</html>

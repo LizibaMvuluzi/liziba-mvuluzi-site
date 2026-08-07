@@ -46,12 +46,18 @@ cette étape — uniquement des retouches de finition.
 
 ```
 /
-├── index.html                 → page unique, 12 sections (voir §3)
+├── index.html                 → page d'accueil, 10 sections (voir §3)
+├── 404.html                    → page d'erreur personnalisée
 ├── manifest.json               → configuration PWA (icône, couleurs, nom)
 ├── robots.txt                  → indexation moteurs de recherche
 ├── sitemap.xml                 → plan du site pour Google Search Console
 ├── README.md                   → ce fichier
 ├── CHANGELOG.md                → historique des versions du projet
+├── /pages                      → pages secondaires (voir §13)
+│   ├── mentions-legales.html
+│   ├── politique-confidentialite.html
+│   ├── fondements.html          → réservée, non publiée
+│   └── yoka-source-labs.html    → réservée, non publiée
 ├── /css
 │   └── style.css                → design system complet, commenté par section
 ├── /js
@@ -177,29 +183,29 @@ code source, pour être repérés facilement par recherche de texte (`Ctrl+F`
 
 ---
 
-## 5. Connecter les formulaires (Booking & Contact)
+## 5. Formulaires (Booking & Contact) — quasi prêts, une clé à récupérer
 
-Par défaut, les deux formulaires valident les champs et affichent un message
-de confirmation, mais **n'envoient aucune donnée** (un `console.log` de test
-est présent dans `js/main.js`, fonctions `initBookingForm` et
-`initContactForm`). Trois options simples, sans backend à maintenir :
+Les deux formulaires sont **déjà branchés** sur [Web3Forms](https://web3forms.com)
+(service gratuit, sans backend, ~250 soumissions/mois) et redirigent vers
+`lizibamvuluzi@gmail.com`. Il ne reste **qu'une seule étape, environ 2
+minutes, sans création de compte** :
 
-**Formspree** (le plus rapide à mettre en place)
-1. Créer un formulaire sur [formspree.io](https://formspree.io).
-2. Dans `index.html`, ajouter `action="https://formspree.io/f/VOTRE_ID"`
-   et `method="POST"` sur les balises `<form id="bookingForm">` et
-   `<form id="contactForm">`.
-3. Supprimer (ou laisser en complément) la logique JavaScript de simulation.
+1. Aller sur [web3forms.com](https://web3forms.com).
+2. Saisir `lizibamvuluzi@gmail.com` pour recevoir une clé d'accès gratuite
+   par e-mail.
+3. Ouvrir `js/main.js`, repérer la constante `WEB3FORMS_ACCESS_KEY` (section
+   « 5. Formulaires »), et remplacer `"REMPLACER_PAR_LA_CLE_WEB3FORMS"` par
+   la clé reçue.
 
-**Netlify Forms** (si hébergé sur Netlify)
-1. Ajouter l'attribut `data-netlify="true"` sur les deux balises `<form>`.
-2. Netlify détecte et collecte automatiquement les soumissions — aucun
-   service tiers nécessaire.
+Tant que cette clé n'est pas renseignée, les formulaires affichent un
+message clair invitant à contacter directement par e-mail — aucun échec
+silencieux.
 
-**EmailJS ou fonction serverless**
-Le point d'intégration exact est indiqué par un commentaire `TODO` dans
-`js/main.js`, à l'intérieur de `initBookingForm()` et `initContactForm()` —
-remplacer le `console.log` par l'appel à l'API choisie.
+**Alternatives** si vous préférez un autre service : Formspree (ajouter
+`action="https://formspree.io/f/VOTRE_ID"` sur les balises `<form>`) ou,
+si le site est un jour hébergé sur Netlify, l'attribut `data-netlify="true"`
+(Netlify Forms, aucun service tiers). Dans ces deux cas, remplacer l'appel
+à `submitForm()` dans `initBookingForm()`/`initContactForm()` en conséquence.
 
 ---
 
@@ -388,3 +394,52 @@ fois puis mises en cache par `js/main.js`.
 Le nouveau contenu s'affiche automatiquement au prochain chargement de la
 page, sans qu'aucun fichier `.html`, `.css` ou `.js` n'ait besoin d'être
 modifié.
+
+---
+
+## 13. V1.3 — Release Candidate (pages légales, multi-pages)
+
+Le site est passé d'une page unique à une petite architecture multi-pages,
+**toujours sans framework ni build** :
+
+```
+/
+├── index.html
+├── 404.html                          → page d'erreur personnalisée (racine imposée par GitHub Pages)
+└── /pages
+    ├── mentions-legales.html
+    ├── politique-confidentialite.html
+    ├── fondements.html                → réservée, sans contenu, non liée, noindex
+    └── yoka-source-labs.html          → réservée, sans contenu, non liée, noindex
+```
+
+**Header et footer sont dupliqués** dans chaque fichier HTML (choix
+délibéré : simplicité et pérennité plutôt qu'un système de build). Toute
+future modification du header/footer (nouveau lien de nav, changement de
+logo, etc.) doit être répercutée manuellement dans les 6 fichiers HTML.
+
+**`js/main.js` fonctionne depuis n'importe quelle profondeur** grâce à
+l'attribut `data-base-path` sur la balise `<html>` : vide (`""`) à la
+racine, `"../"` depuis `/pages/`. À respecter pour toute nouvelle page.
+
+**Pages réservées (Fondements, YOKA Source Labs).** Structure HTML posée
+par anticipation (header/footer déjà en place, chemins déjà corrects),
+mais volontairement sans contenu et sans lien nulle part sur le site —
+conformément à la décision de ne pas publier de texte provisoire. Marquées
+`<meta name="robots" content="noindex, nofollow">`. Pour les publier au
+moment venu :
+1. Renseigner le contenu validé dans la section `<main>`.
+2. Retirer le `noindex, nofollow`.
+3. Ajouter un lien dans `<ul class="nav__menu">` (header) et
+   `<nav class="site-footer__nav">` (footer) — dans **les 6 fichiers HTML**.
+4. Ajouter l'URL dans `sitemap.xml`.
+
+**Mentions légales et politique de confidentialité** sont réellement
+publiées et indexables. Elles reposent sur les informations suivantes,
+à vérifier/compléter si la situation change : éditeur individuel (NDINGA
+Rhudy Joseph), hébergeur GitHub Pages, aucun cookie de suivi actif à ce
+jour. Ce sont des textes standards couvrant les obligations essentielles —
+une relecture par un professionnel du droit est recommandée avant toute
+activité commerciale significative (vente de billets, produits dérivés,
+etc.).
+

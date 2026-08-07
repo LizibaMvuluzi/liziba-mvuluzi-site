@@ -11,6 +11,81 @@ ajustements, le nettoyage ou les corrections techniques.
 
 ---
 
+## [1.3.0] — 2026-08-06
+
+Release Candidate — première version publique officielle destinée à
+remplacer Linktree. Cette version se concentre sur la finalisation
+juridique, technique et éditoriale du site existant (aucune refonte de
+design, aucune nouvelle section visible hors ajouts explicitement validés).
+
+### Ajouté
+- **Mentions légales** et **Politique de confidentialité**
+  (`/pages/mentions-legales.html`, `/pages/politique-confidentialite.html`) —
+  titulaire NDINGA Rhudy Joseph, hébergement GitHub Pages, droits RGPD.
+  Liens ajoutés au footer ; mention de consentement sous les deux
+  formulaires.
+- **Page 404 personnalisée** (`404.html`, à la racine — emplacement imposé
+  par GitHub Pages), cohérente avec l'identité noir/or du site.
+- **Bloc éditorial « Aux origines de la Mbokalisation »** dans la
+  Discographie, avec lien d'écoute vers « Nouveau Concept » sur Spotify.
+- **Image Open Graph premium** (`assets/images/social/og-cover.jpg`),
+  composée à partir de la bannière Hero et du logo officiel.
+- **Formulaires réellement fonctionnels** via Web3Forms (service gratuit
+  sans backend, compatible hébergement statique), redirigeant vers
+  `lizibamvuluzi@gmail.com`. Une clé d'accès reste à renseigner par le
+  site (`js/main.js`, constante `WEB3FORMS_ACCESS_KEY` — voir instructions
+  en commentaire, ~2 minutes sans création de compte).
+- **Architecture réservée**, sans contenu ni lien visible, pour les futures
+  pages *Les Fondements* et *YOKA Source Labs* (`/pages/fondements.html`,
+  `/pages/yoka-source-labs.html`), marquées `noindex, nofollow`.
+- Préfixe de chemin configurable (`data-base-path`) dans `js/main.js`,
+  permettant au même script de fonctionner depuis la racine ou depuis
+  `/pages/`.
+
+### Modifié
+- **Logo** : fond blanc supprimé par détourage réel (canal alpha, et non
+  une simple approximation CSS), taille augmentée de 12 % dans le Header,
+  effet de survol conservé.
+- **Réseaux sociaux** : liens du footer (jusque-là statiques et factices)
+  désormais alimentés dynamiquement par `socials.json`, comme la grille
+  Réseaux sociaux. `sameAs` du Schema.org Person mis à jour avec les 9
+  profils réels (Threads retiré).
+- **Contact** : adresses `booking@`/`presse@lizibamvuluzi.com` retirées ;
+  la section Contact affiche désormais `lizibamvuluzi@gmail.com`. WhatsApp
+  officiel confirmé (`wa.me/message/D6UYXL7U7JS4K1`).
+- **Concerts** : nouveau texte d'état vide, sans date engageante :
+  « Un grand rendez-vous est en préparation. Les détails seront annoncés
+  prochainement. »
+- **Footer** : copyright mis à jour — « © YOKA SOURCE LABS — Site officiel
+  de Liziba Mvuluzi » (année dynamique, plus pérenne qu'une valeur figée).
+- `releases.json` : featuring Afara Tsena ajouté sur « Le Généreux Remix »,
+  pour harmoniser avec le texte déjà présent dans la Biographie (la
+  Biographie l'affirmait déjà ; l'incohérence portait sur la donnée, pas
+  sur un fait nouveau).
+- Relecture éditoriale : suppression d'un écho de libellé entre le bloc
+  « Faits marquants » et la timeline de la Biographie (repère renommé
+  « Fondation »), correction d'une mention à « l'équipe » dans le texte de
+  Booking (l'artiste gère seul sa carrière, sans manager).
+
+### Supprimé
+- **Rubrique Kit Presse** retirée entièrement (section, nav, footer, CSS
+  mort) — sera réintroduite avec un véritable kit professionnel. Sections
+  renumérotées en conséquence (09 → Réseaux sociaux, 10 → Contact).
+- Numéro de téléphone factice de la section Contact (jamais fourni).
+
+### Vérifié (audit final)
+- HTML équilibré sur les 6 pages du site (index, 404, 4 pages `/pages/`).
+- CSS et JavaScript revalidés après l'ensemble des modifications.
+- 6 fichiers JSON, `sitemap.xml` et les 2 blocs Schema.org valides.
+- Tous les chemins relatifs résolvent correctement sur chaque page,
+  y compris depuis `/pages/` (préfixe `data-base-path`).
+- Toutes les ancres de navigation utilisées depuis les sous-pages
+  (`../index.html#section`) pointent vers un `id` réel.
+- Tous les liens externes protégés par `rel="noopener"`.
+- Logo : canal alpha confirmé présent et fonctionnel dans le fichier livré.
+
+---
+
 ## [1.2.2] — 2026-08-04
 
 ### Modifié

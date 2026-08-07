@@ -4,7 +4,9 @@
     {
       "id": "le-genereux-remix",
       "title": "Le Généreux Remix",
-      "featuring": [],
+      "featuring": [
+        "Afara Tsena"
+      ],
       "type": "single",
       "releaseDate": "",
       "cover": "assets/images/covers/le-genereux-remix.jpg",

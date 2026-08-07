@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- URLs temporaires GitHub Pages en attendant le domaine définitif lizibamvuluzi.com — voir index.html pour la marche à suivre lors du passage au domaine personnalisé -->
+<!-- URLs temporaires GitHub Pages en attendant le domaine définitif lizibamvuluzi.fr — voir index.html pour la marche à suivre lors du passage au domaine personnalisé -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/#nouveautes</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/#biographie</loc>
@@ -37,11 +42,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/#presse</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
     <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/#reseaux</loc>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -55,5 +55,15 @@
     <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/#contact</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/pages/mentions-legales.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  <url>
+    <loc>https://lizibamvuluzi.github.io/liziba-mvuluzi-site/pages/politique-confidentialite.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
   </url>
 </urlset>
