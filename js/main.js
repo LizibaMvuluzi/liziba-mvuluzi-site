@@ -17,6 +17,15 @@
    ========================================================================== */
 
 /**
+ * Marqueur "JS a démarré", posé immédiatement à l'exécution du script
+ * (avant tout appel de fonction, avant même DOMContentLoaded). C'est ce
+ * qui active .reveal en CSS (voir section 2). Si ce script ne se charge
+ * ou ne s'exécute pas du tout, cette classe n'est jamais posée et le
+ * contenu .reveal reste visible par défaut plutôt que caché indéfiniment.
+ */
+document.documentElement.classList.add("js-ready");
+
+/**
  * Limite l'exécution d'une fonction à une fois par frame d'animation.
  * Évite le layout thrashing sur les écouteurs de scroll haute fréquence.
  */
@@ -32,18 +41,36 @@ function onScrollFrame(callback) {
   };
 }
 
+/**
+ * Exécute une fonction d'initialisation de façon isolée : si elle échoue,
+ * l'erreur est journalisée en console mais n'empêche jamais les
+ * initialisations suivantes de s'exécuter. Sans cette isolation, une
+ * exception dans une seule fonction (ex. sélecteur CSS invalide) bloquait
+ * silencieusement tout le reste — y compris initRevealOnScroll(), qui
+ * rend visible le contenu des sections .reveal. C'est cette cause exacte
+ * qui rendait les pages secondaires visuellement vides malgré un code
+ * par ailleurs syntaxiquement correct.
+ */
+function safeInit(name, fn) {
+  try {
+    fn();
+  } catch (error) {
+    console.error(`[init] ${name} a échoué :`, error);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
-  initHeaderScroll();
-  initMobileNav();
-  initSmoothAnchors();
-  initActiveNav();
-  initRevealOnScroll();
-  initBookingForm();
-  initContactForm();
-  initLightbox();
-  initBackToTop();
-  initFooterYear();
-  initSiteData();
+  safeInit("initHeaderScroll", initHeaderScroll);
+  safeInit("initMobileNav", initMobileNav);
+  safeInit("initSmoothAnchors", initSmoothAnchors);
+  safeInit("initActiveNav", initActiveNav);
+  safeInit("initRevealOnScroll", initRevealOnScroll);
+  safeInit("initBookingForm", initBookingForm);
+  safeInit("initContactForm", initContactForm);
+  safeInit("initLightbox", initLightbox);
+  safeInit("initBackToTop", initBackToTop);
+  safeInit("initFooterYear", initFooterYear);
+  safeInit("initSiteData", initSiteData);
 });
 
 
@@ -98,12 +125,18 @@ function initActiveNav() {
   const navLinks = Array.from(document.querySelectorAll("[data-nav]"));
   if (!navLinks.length || !("IntersectionObserver" in window)) return;
 
-  const sections = navLinks
+  // Sur les pages secondaires (/pages/*.html), les liens de nav pointent
+  // vers "../index.html#section" : ce ne sont pas des ancres de la page
+  // courante, donc ils sont exclus du suivi de section active.
+  const sameDocumentLinks = navLinks.filter((link) => link.getAttribute("href").startsWith("#"));
+  if (!sameDocumentLinks.length) return;
+
+  const sections = sameDocumentLinks
     .map((link) => document.querySelector(link.getAttribute("href")))
     .filter(Boolean);
 
   const setActive = (id) => {
-    navLinks.forEach((link) => {
+    sameDocumentLinks.forEach((link) => {
       link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`);
     });
   };

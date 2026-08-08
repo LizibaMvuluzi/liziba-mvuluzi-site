@@ -11,6 +11,88 @@ ajustements, le nettoyage ou les corrections techniques.
 
 ---
 
+## [1.4.2] — 2026-08-08
+
+### Corrigé
+- **Correction du rendu des pages secondaires.** Les 4 pages
+  (`/pages/fondements.html`, `/pages/yoka-source-labs.html`,
+  `/pages/mentions-legales.html`, `/pages/politique-confidentialite.html`)
+  apparaissaient vides (zone noire) une fois publiées sur GitHub Pages,
+  bien que le header et la navigation restaient visibles.
+  **Cause exacte identifiée :** dans `initActiveNav()` (`js/main.js`),
+  `document.querySelector(link.getAttribute("href"))` recevait, sur ces
+  pages, des `href` du type `"../index.html#nouveautes"` — une chaîne qui
+  n'est pas un sélecteur CSS valide. Le navigateur levait une exception à
+  ce moment précis, non interceptée, qui interrompait immédiatement toute
+  la suite de l'initialisation JavaScript exécutée dans le même
+  gestionnaire d'événement — en particulier `initRevealOnScroll()`,
+  responsable de rendre visible le contenu marqué `.reveal` (`opacity: 0`
+  par défaut, jusqu'à ce que le JavaScript ajoute `.is-visible`). Sans
+  cette étape, tout le contenu principal des 4 pages restait invisible
+  indéfiniment. Cause confirmée par simulation fidèle du comportement
+  `querySelector` d'un navigateur (voir rapport de livraison).
+- **Correction du mécanisme `.reveal`, à deux niveaux, pour empêcher toute
+  récidive :**
+  1. `initActiveNav()` ignore désormais les liens de navigation
+     inter-pages (`href` ne commençant pas par `#`) avant tout appel à
+     `querySelector` — le bug exact ne peut plus se reproduire.
+  2. Chaque fonction d'initialisation (`initHeaderScroll`,
+     `initActiveNav`, `initRevealOnScroll`, etc.) est désormais isolée via
+     un utilitaire `safeInit()` : une erreur dans l'une n'empêche plus
+     jamais les autres de s'exécuter — robustesse générale, pas seulement
+     un correctif ponctuel.
+  3. **Filet de sécurité CSS supplémentaire**, y compris en cas
+     d'échec total de chargement de `main.js` (réseau, bloqueur de
+     script) : `.reveal` n'est masqué (`opacity: 0`) que sous la classe
+     `.js-ready`, posée en tout premier lieu par `main.js` dès son
+     exécution. Sans JavaScript actif, le contenu reste visible par
+     défaut plutôt que caché indéfiniment — conforme au principe « le
+     contenu doit rester accessible même si JavaScript échoue ». Aucun
+     changement visuel dans le fonctionnement normal du site.
+- **Correction de l'intitulé « Le Cabinet » en « La Structure »**
+  (`pages/yoka-source-labs.html`, libellé latéral de la page).
+- **Correction de l'affichage du titre « Le Généreux Remix ».** Le titre
+  public de cette sortie affichait `Le Généreux Remix (feat. Afara
+  Tsena)` dans la Discographie, et une variante équivalente dans la carte
+  Nouveautés et le sous-titre de la section Musique. Corrigé à la source
+  (`data/releases.json`, champ `featuring` de cette sortie vidé), pas
+  seulement dans le rendu HTML — la Discographie, la carte Nouveautés et
+  le titre à la une affichent désormais uniformément « Le Généreux
+  Remix ». Les autres mentions historiques d'Afara Tsena (Biographie,
+  bloc « Aux origines de la Mbokalisation », Schema.org) sont
+  intentionnellement conservées à l'identique, hors périmètre de cette
+  correction.
+
+### Vérifié (audit final)
+- HTML équilibré sur les 6 pages ; CSS et JavaScript revalidés
+  (`node --check`).
+- Bug reproduit et correctif validé par simulation fidèle du comportement
+  navigateur (`document.querySelector` sur sélecteur invalide), pas
+  uniquement par relecture de code.
+- Crawl complet des 6 pages : Accueil→Fondements, Accueil→YOKA Labs,
+  Footer→Mentions légales, Footer→Confidentialité, et les 4 chemins
+  retour vers l'accueil — aucun lien cassé, aucune ancre orpheline.
+- `data-base-path="../"` confirmé présent sur les 4 pages secondaires.
+- Structure des Fondements vérifiée intacte (I–IV puis La Guitare
+  Spirituelle en coda, non numérotée comme 5ᵉ fondement).
+- Devise et doctrine YOKA Source Labs vérifiées intactes et inchangées.
+- 6 fichiers JSON valides ; aucune donnée modifiée hors le featuring de la
+  seule sortie concernée.
+- Tous les liens externes protégés par `rel="noopener"` (vérifié sur les
+  6 pages).
+
+### Non testé en conditions réelles
+- Envoi effectif d'e-mail via Web3Forms (nécessite un accès réseau
+  sortant, indisponible dans l'environnement d'exécution de Claude) — déjà
+  signalé en V1.4.1, toujours à confirmer par vos soins sur le site
+  publié.
+- Rendu visuel réel dans un navigateur (Claude ne dispose pas d'un moteur
+  de rendu graphique) — la correction a été validée par simulation fidèle
+  du comportement JavaScript/DOM plutôt que par capture d'écran ; un
+  contrôle visuel de votre part sur GitHub Pages reste recommandé.
+
+---
+
 ## [1.4.1] — 2026-08-07 — Correctif final de la série V1.x
 
 - Activation définitive des formulaires Web3Forms.

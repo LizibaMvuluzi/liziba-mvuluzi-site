@@ -145,8 +145,11 @@ input, textarea, select { font: inherit; color: inherit; }
 }
 .link-more:hover { color: var(--or); border-color: var(--or); }
 
-/* Apparition douce au scroll */
-.reveal {
+/* Apparition douce au scroll — n'assombrit le contenu que si JS a
+   effectivement démarré (voir la classe .js-ready posée en inline dans
+   <head> de chaque page). Sans JS (script bloqué, erreur réseau...), le
+   contenu reste visible par défaut plutôt que caché indéfiniment. */
+.js-ready .reveal {
   opacity: 0; transform: translateY(28px);
   transition: opacity 0.9s var(--ease), transform 0.9s var(--ease);
 }
