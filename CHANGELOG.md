@@ -11,6 +11,56 @@ ajustements, le nettoyage ou les corrections techniques.
 
 ---
 
+## [1.4.1] — 2026-08-07 — Correctif final de la série V1.x
+
+- Activation définitive des formulaires Web3Forms.
+- Ajout du message de confirmation après envoi.
+- Réinitialisation automatique des formulaires après succès.
+- Protection contre les doubles soumissions.
+- Correction du titre « Le Généreux » dans la section Vidéos.
+- Vérification complète des formulaires.
+
+### Détail technique
+- `js/main.js` : clé d'accès Web3Forms réelle intégrée (compte créé par
+  l'artiste) ; les deux formulaires (Booking, Contact) sont désormais
+  pleinement opérationnels et redirigent vers `lizibamvuluzi@gmail.com`.
+  Le message « Formulaire non configuré pour l'instant… » ne peut plus
+  s'afficher.
+- Message de confirmation signé et multi-ligne (texte fourni respecté à
+  l'identique) : « Merci. Votre message a bien été transmis. Je prendrai
+  connaissance de votre demande et vous répondrai dans les meilleurs
+  délais. — Liziba Mvuluzi » — nouveau style dédié (`.form-status__title`,
+  `.form-status__signature`), cohérent avec l'identité typographique du
+  site (Fraunces, or premium).
+- Réinitialisation des champs (`form.reset()`) déjà en place depuis
+  l'activation initiale (V1.3) — confirmée fonctionnelle avec la vraie clé.
+- Protection anti-double-soumission renforcée : garde ajoutée en tête de
+  `submitForm()` (`if (submitBtn.disabled) return;`), qui couvre aussi
+  bien un double-clic que la validation d'un formulaire au clavier
+  (touche Entrée) pendant qu'un envoi est déjà en cours.
+- Nouvel état visuel `.btn:disabled` (opacité réduite, curseur adapté)
+  pour un retour clair pendant l'envoi.
+- `data/videos.json` : titre du clip corrigé, `"Le Généreux Remix"` →
+  `"Le Généreux"`. Seul ce libellé a été modifié — le nom de la sortie
+  elle-même (`releases.json`, Biographie, titre à la une) reste à juste
+  titre « Le Généreux Remix », qui est le nom réel de la sortie, distinct
+  du titre du clip.
+
+### Vérifié
+- Syntaxe JavaScript validée (`node --check`).
+- HTML équilibré sur les 6 pages, CSS toujours cohérent, JSON valides.
+- Relecture statique complète du code d'envoi (endpoint, champs
+  `access_key`/`subject`/`from_name`, noms de champs des deux
+  formulaires) — conforme au contrat d'API Web3Forms.
+- **Limite technique à signaler honnêtement** : l'environnement d'exécution
+  utilisé pour cette livraison n'a pas d'accès réseau sortant ; un envoi
+  réel de test (`fetch` vers `api.web3forms.com`) n'a donc pas pu être
+  déclenché depuis cet environnement. Le code a été relu et vérifié
+  statiquement avec la plus grande rigueur, mais **un test réel depuis le
+  site publié reste à faire** (voir recommandation de livraison).
+
+---
+
 ## [1.4.0] — 2026-08-07 — Édition Fondatrice
 
 Première version du site à établir les fondements identitaires complets

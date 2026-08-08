@@ -154,17 +154,23 @@ function initRevealOnScroll() {
  * 100% statique (GitHub Pages, Netlify, Vercel). Toutes les soumissions
  * sont redirigées par e-mail vers lizibamvuluzi@gmail.com.
  *
- * CLÉ À CONFIGURER (une seule fois, ~2 minutes) :
- * 1. Aller sur https://web3forms.com
- * 2. Saisir lizibamvuluzi@gmail.com pour obtenir une clé d'accès gratuite
- *    (aucune création de compte requise, clé envoyée par e-mail).
- * 3. Remplacer la valeur ci-dessous par cette clé.
- * Tant que la clé n'est pas renseignée, les formulaires affichent un
- * message clair plutôt que d'échouer silencieusement.
+ * Clé d'accès activée le 07/08/2026 (compte Web3Forms créé par l'artiste).
  */
-const WEB3FORMS_ACCESS_KEY = "REMPLACER_PAR_LA_CLE_WEB3FORMS";
+const WEB3FORMS_ACCESS_KEY = "04225266-8537-4951-87a2-c050cbb8d1e0";
+
+/** Message de confirmation affiché après un envoi réussi, signé, multi-ligne. */
+function renderSuccessMessage(status) {
+  status.innerHTML =
+    '<strong class="form-status__title">Merci.</strong>' +
+    "Votre message a bien été transmis.<br>" +
+    "Je prendrai connaissance de votre demande et vous répondrai dans les meilleurs délais." +
+    '<span class="form-status__signature">— Liziba Mvuluzi</span>';
+}
 
 async function submitForm(form, status, subject) {
+  const submitBtn = form.querySelector('button[type="submit"]');
+  if (submitBtn && submitBtn.disabled) return; // envoi déjà en cours, ignore toute nouvelle tentative
+
   status.classList.remove("is-error");
 
   if (!form.checkValidity()) {
@@ -173,14 +179,7 @@ async function submitForm(form, status, subject) {
     return;
   }
 
-  if (!WEB3FORMS_ACCESS_KEY || WEB3FORMS_ACCESS_KEY.startsWith("REMPLACER_")) {
-    status.textContent = "Formulaire non configuré pour l'instant — merci de contacter directement lizibamvuluzi@gmail.com.";
-    status.classList.add("is-error");
-    return;
-  }
-
-  const submitBtn = form.querySelector('button[type="submit"]');
-  if (submitBtn) submitBtn.disabled = true;
+  if (submitBtn) submitBtn.disabled = true; // empêche tout double-clic ou double-Entrée pendant l'envoi
   status.textContent = "Envoi en cours…";
 
   const formData = new FormData(form);
@@ -197,8 +196,8 @@ async function submitForm(form, status, subject) {
 
     if (result.success) {
       status.classList.remove("is-error");
-      status.textContent = "Merci. Votre message a bien été transmis — une réponse vous parviendra rapidement.";
-      form.reset();
+      renderSuccessMessage(status);
+      form.reset(); // vide automatiquement les champs après un envoi réussi
     } else {
       throw new Error(result.message || "Échec de l'envoi");
     }

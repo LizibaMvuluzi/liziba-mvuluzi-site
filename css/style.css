@@ -135,6 +135,7 @@ input, textarea, select { font: inherit; color: inherit; }
 .btn--ghost { border-color: rgba(246, 241, 228, 0.28); color: var(--blanc-casse); }
 .btn--ghost:hover { border-color: var(--or); color: var(--or); transform: translateY(-2px); }
 .btn--sm { padding: 0.7rem 1.3rem; font-size: 0.7rem; }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
 
 .link-more {
   display: inline-block; margin-top: 1.4rem;
@@ -529,8 +530,16 @@ input, textarea, select { font: inherit; color: inherit; }
 .form-field input:focus, .form-field textarea:focus, .form-field select:focus { outline: none; border-color: var(--or); }
 .form-field textarea { resize: vertical; }
 .booking__form .btn, .contact__form .btn { margin-top: 0.6rem; }
-.form-status { margin-top: 1rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--or-clair); min-height: 1.2em; }
+.form-status { margin-top: 1rem; font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.7; color: var(--or-clair); min-height: 1.2em; }
 .form-status.is-error { color: #e07a5f; }
+.form-status__title {
+  display: block; font-family: var(--font-display); font-size: 1.15rem; font-weight: 400;
+  color: var(--blanc-casse); margin-bottom: 0.4rem;
+}
+.form-status__signature {
+  display: block; margin-top: 0.7rem; font-family: var(--font-display); font-style: italic;
+  font-size: 0.95rem; color: var(--or);
+}
 .form-consent { margin-top: 0.8rem; font-size: 0.76rem; color: var(--gris); }
 .form-consent a { color: var(--gris); text-decoration: underline; text-underline-offset: 2px; transition: color 0.3s var(--ease); }
 .form-consent a:hover { color: var(--or); }

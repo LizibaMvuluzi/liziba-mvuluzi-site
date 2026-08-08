@@ -183,23 +183,32 @@ code source, pour être repérés facilement par recherche de texte (`Ctrl+F`
 
 ---
 
-## 5. Formulaires (Booking & Contact) — quasi prêts, une clé à récupérer
+## 5. Formulaires (Booking & Contact) — actifs et opérationnels
 
-Les deux formulaires sont **déjà branchés** sur [Web3Forms](https://web3forms.com)
-(service gratuit, sans backend, ~250 soumissions/mois) et redirigent vers
-`lizibamvuluzi@gmail.com`. Il ne reste **qu'une seule étape, environ 2
-minutes, sans création de compte** :
+Les deux formulaires sont **pleinement fonctionnels** via
+[Web3Forms](https://web3forms.com) (service gratuit, sans backend, ~250
+soumissions/mois) et redirigent vers `lizibamvuluzi@gmail.com`. La clé
+d'accès est déjà intégrée dans `js/main.js` (constante
+`WEB3FORMS_ACCESS_KEY`, section « 5. Formulaires »).
 
-1. Aller sur [web3forms.com](https://web3forms.com).
-2. Saisir `lizibamvuluzi@gmail.com` pour recevoir une clé d'accès gratuite
-   par e-mail.
-3. Ouvrir `js/main.js`, repérer la constante `WEB3FORMS_ACCESS_KEY` (section
-   « 5. Formulaires »), et remplacer `"REMPLACER_PAR_LA_CLE_WEB3FORMS"` par
-   la clé reçue.
+**Comportement :**
+- Double-clic / double-Entrée bloqués pendant l'envoi (bouton désactivé,
+  toute tentative concurrente ignorée).
+- Message de confirmation signé, en plusieurs lignes, cohérent avec
+  l'identité du site (`renderSuccessMessage()`).
+- Champs réinitialisés automatiquement après un envoi réussi.
+- En cas d'erreur réseau, message clair invitant à écrire directement à
+  `lizibamvuluzi@gmail.com` — jamais d'échec silencieux.
 
-Tant que cette clé n'est pas renseignée, les formulaires affichent un
-message clair invitant à contacter directement par e-mail — aucun échec
-silencieux.
+**Test en conditions réelles :** un envoi de test depuis chaque formulaire
+(Booking et Contact), sur le site publié, reste à confirmer par vos soins
+— l'environnement d'exécution de Claude n'a pas d'accès réseau sortant et
+ne peut donc pas déclencher un appel HTTP réel vers l'API Web3Forms pour
+vérifier la réception effective de l'e-mail.
+
+**Si la clé doit être changée un jour** (perte, rotation) : elle se
+retrouve sur [web3forms.com](https://web3forms.com) en saisissant à
+nouveau `lizibamvuluzi@gmail.com`, aucune création de compte requise.
 
 **Alternatives** si vous préférez un autre service : Formspree (ajouter
 `action="https://formspree.io/f/VOTRE_ID"` sur les balises `<form>`) ou,
