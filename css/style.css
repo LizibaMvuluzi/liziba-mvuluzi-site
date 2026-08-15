@@ -206,14 +206,14 @@ input, textarea, select { font: inherit; color: inherit; }
   background-color: #0d0d0a;
   background-image: url("../assets/images/hero/hero-portrait.jpg");
   background-repeat: no-repeat;
-  background-position: 68% 15%;
+  background-position: 55% 20%;
   background-size: cover;
 }
 @media (max-width: 1079px) {
-  .hero__portrait-frame { background-position: 74% 14%; }
+  .hero__portrait-frame { background-position: 53% 18%; }
 }
 @media (max-width: 760px) {
-  .hero__portrait-frame { background-position: 82% 12%; }
+  .hero__portrait-frame { background-position: 56% 15%; }
 }
 .hero__portrait-frame::before {
   content: ""; position: absolute; inset: 0;

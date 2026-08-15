@@ -11,6 +11,68 @@ ajustements, le nettoyage ou les corrections techniques.
 
 ---
 
+## [1.4.3] — 2026-08-09
+
+Mise à jour de contenu ciblée — aucune modification de la structure
+éditoriale des pages Fondements et YOKA Source Labs, aucune régression sur
+les correctifs V1.4.2.
+
+### Ajouté
+- **Boomplay** ajouté comme plateforme de streaming officielle, via
+  `data/socials.json` (source unique) — lien officiel exact fourni,
+  aucune URL de recherche ni profil inventé. Apparaît automatiquement
+  dans la grille de plateformes (section Musique) et dans les liens du
+  footer, au même titre que les 5 autres plateformes déjà présentes.
+  Aucune plateforme existante retirée ou modifiée.
+- Icône SVG locale `assets/icons/platforms/boomplay.svg` (même style
+  ligne fine `currentColor` que les 10 icônes existantes).
+
+### Modifié
+- **Photo principale du Hero** remplacée par la nouvelle photographie
+  noir et blanc fournie (`assets/images/hero/hero-portrait.jpg`, même
+  chemin, seul fichier remplacé — aucune référence cassée ailleurs, cette
+  image n'étant utilisée qu'à cet unique endroit). Convertie en JPEG sans
+  filtre ni retouche autre que la compression d'optimisation web ; noir
+  et blanc conservé tel que fourni.
+- `background-position` de `.hero__portrait-frame` recalibré pour la
+  nouvelle composition (photo carrée, sujet centre-droit) sur les 3
+  paliers responsive existants (desktop / tablette / mobile) — structure,
+  dégradé de lisibilité, typographie, boutons et animations du Hero
+  strictement inchangés. Cadrage vérifié par simulation fidèle du rendu
+  `background-size: cover` sur 3 résolutions avant livraison (pas
+  seulement supposé correct).
+
+### Vérifié (audit final)
+- CSS, JavaScript (`node --check`) et 6 fichiers JSON revalidés.
+- 11 icônes de plateformes valides.
+- `initActiveNav()`, `safeInit()` et le filet de sécurité `.js-ready` du
+  mécanisme `.reveal` (correctifs V1.4.2) confirmés intacts, aucune
+  régression.
+- Pages Fondements et YOKA Source Labs confirmées **strictement
+  identiques** (diff binaire) à la version V1.4.2 validée — aucune
+  altération de structure ni de contenu.
+- « Le Généreux Remix » confirmé toujours affiché sans « (feat. Afara
+  Tsena) » (featuring vidé dans `data/releases.json`, inchangé depuis
+  V1.4.2).
+- Lien Boomplay vérifié caractère pour caractère identique à l'URL
+  fournie, aucun second lien Boomplay créé par erreur.
+- Diff complet contre la V1.4.2 : seuls `assets/images/hero/hero-portrait.jpg`,
+  `css/style.css`, `data/socials.json` modifiés, et
+  `assets/icons/platforms/boomplay.svg` ajouté — aucun autre fichier
+  touché.
+
+### Non modifié (rappel du périmètre)
+- Image Open Graph (`assets/images/social/og-cover.jpg`), toujours
+  composée à partir de l'ancienne photo Hero — non demandée dans cette
+  mise à jour, donc non retouchée. À signaler si une mise à jour est
+  souhaitée dans une prochaine livraison.
+- Schema.org (`sameAs`) : non mis à jour avec le lien Boomplay dans cette
+  passe, la demande portant explicitement sur l'affichage des plateformes
+  d'écoute et non sur les données structurées SEO — à signaler de la même
+  façon si souhaité.
+
+---
+
 ## [1.4.2] — 2026-08-08
 
 ### Corrigé

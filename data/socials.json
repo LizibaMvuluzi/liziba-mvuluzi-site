@@ -9,6 +9,7 @@
     { "id": "apple-music", "label": "Apple Music", "url": "https://music.apple.com/fr/artist/liziba-mvuluzi/1813984515", "group": "streaming" },
     { "id": "deezer", "label": "Deezer", "url": "https://link.deezer.com/s/340E7vIZbh4JHc9Gb6iJ9", "group": "streaming" },
     { "id": "tidal", "label": "TIDAL", "url": "https://tidal.com/@lizibamvuluzi", "group": "streaming" },
-    { "id": "amazon-music", "label": "Amazon Music", "url": "https://music.amazon.fr/artists/B0FBMFZMFV", "group": "streaming" }
+    { "id": "amazon-music", "label": "Amazon Music", "url": "https://music.amazon.fr/artists/B0FBMFZMFV", "group": "streaming" },
+    { "id": "boomplay", "label": "Boomplay", "url": "https://www.boomplay.com/share/shareUser/195740241?srModel=COPYLINK&share_content=user&share_channel=copylink&share_platform=ios&srList=IOS", "group": "streaming" }
   ]
 }
