@@ -11,6 +11,40 @@ ajustements, le nettoyage ou les corrections techniques.
 
 ---
 
+## [1.4.4] — 2026-08-09
+
+### Ajouté
+- Boomplay ajouté au `sameAs` du Schema.org `Person` (`index.html`), en
+  cohérence avec `data/socials.json` (V1.4.3) — complète les deux points
+  laissés en attente lors de la précédente livraison.
+
+### Modifié
+- **Image Open Graph** régénérée avec la nouvelle photo Hero (même
+  traitement graphique : dégradé de lisibilité, typographie, logo — seule
+  la photo source change). Recadrage recalculé spécifiquement pour cette
+  image (format 1200×630, différent du Hero plein écran).
+- **Lisibilité du paragraphe descriptif du Hero, mobile uniquement.** Sur
+  petit écran (iPhone notamment), le texte gris standard se fondait dans
+  la photo. Couleur éclaircie vers un ivoire doux (`--blanc-casse` à 86 %
+  d'opacité, jamais blanc pur) — ajout scopé exclusivement à
+  `@media (max-width: 760px)`, aucune autre propriété, aucun autre
+  élément du Hero, aucune autre page concernée.
+
+### Vérifié (audit final)
+- Diff CSS isolé et relu ligne à ligne : un seul ajout (règle média
+  mobile sur `.hero__baseline`), aucune ligne existante modifiée ou
+  supprimée.
+- `index.html` : diff limité à l'ajout de l'URL Boomplay dans `sameAs`.
+- `js/main.js` confirmé strictement identique (diff vide) — aucune
+  régression sur les correctifs V1.4.2 (`initActiveNav`, `safeInit`,
+  filet `.js-ready`).
+- 404.html et les 4 pages `/pages/*.html` confirmées strictement
+  identiques (diff vide) — Fondements et YOKA Source Labs non affectées.
+- HTML équilibré sur les 6 pages, 2 blocs Schema.org valides, 6 fichiers
+  JSON valides, CSS équilibré.
+
+---
+
 ## [1.4.3] — 2026-08-09
 
 Mise à jour de contenu ciblée — aucune modification de la structure

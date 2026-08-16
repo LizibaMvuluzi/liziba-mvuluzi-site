@@ -263,6 +263,14 @@ input, textarea, select { font: inherit; color: inherit; }
 .hero__rule { display: inline-block; width: 44px; height: 1px; background: var(--or); }
 .hero__baseline { margin-top: 1.3rem; max-width: 52ch; color: var(--gris); font-size: 1.02rem; }
 .hero__baseline strong { color: var(--blanc-casse); font-weight: 500; }
+
+/* Lisibilité mobile uniquement : le gris standard se fond dans la photo
+   sur petit écran (iPhone notamment). Couleur plus claire (ivoire doux,
+   jamais blanc pur) + opacité légèrement augmentée. Aucun autre style,
+   position, typographie ou élément du Hero n'est concerné. */
+@media (max-width: 760px) {
+  .hero__baseline { color: var(--blanc-casse); opacity: 0.86; }
+}
 .hero__actions { display: flex; gap: 1rem; margin-top: 2.8rem; flex-wrap: wrap; }
 
 .hero__scroll {
