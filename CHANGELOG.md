@@ -11,6 +11,43 @@ ajustements, le nettoyage ou les corrections techniques.
 
 ---
 
+## [1.4.5] — 2026-08-09
+
+### Corrigé
+- **Textes de partage social obsolètes.** Signalé par capture d'écran :
+  un partage WhatsApp du site affichait encore l'ancienne description
+  (« Créateur de La Mbokalisation. Il fait dialoguer les héritages
+  d'Afrique centrale... »), jamais mise à jour depuis la validation de la
+  signature Hero définitive (V1.4.0 : « Co-créateur du concept de la
+  Mbokalisation… »). Cause : `og:description`, `twitter:description` et
+  la `description` du Schema.org `Person` n'avaient jamais été
+  synchronisées avec ce changement de texte — seul le Hero visible et la
+  meta SEO principale (`name="description"`) avaient été mis à jour à
+  l'époque. Corrigé dans les 4 emplacements concernés
+  (`name="description"`, `og:description`, `twitter:description`,
+  Schema.org `Person.description`), tous alignés sur « co-créateur »
+  conformément au texte officiel validé.
+- L'image de partage (`og-cover.jpg`) était déjà à jour (nouvelle photo,
+  régénérée en V1.4.4) — seul le texte d'accompagnement était concerné.
+
+### Note pour l'artiste
+Les plateformes comme WhatsApp, Facebook ou X mettent en cache l'aperçu
+d'un lien déjà partagé et ne le régénèrent pas automatiquement. Après
+publication de cette correction, un ancien aperçu déjà partagé peut
+continuer d'afficher le texte périmé jusqu'à expiration du cache de la
+plateforme. Pour forcer une actualisation immédiate : Facebook/WhatsApp
+via le [Sharing Debugger Meta](https://developers.facebook.com/tools/debug/)
+(bouton « Scrape Again » sur l'URL du site), X via un nouveau partage
+après quelques jours. Un nouveau lien jamais partagé auparavant affichera
+directement la version corrigée.
+
+### Vérifié
+- 2 blocs Schema.org toujours valides après correction.
+- Plus aucune occurrence de l'ancien texte dans `index.html`.
+- Diff isolé à `index.html` uniquement — aucun autre fichier touché.
+
+---
+
 ## [1.4.4] — 2026-08-09
 
 ### Ajouté
