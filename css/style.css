@@ -687,6 +687,46 @@ input, textarea, select { font: inherit; color: inherit; }
   .manifesto-grid__thread { display: none; }
 }
 
+
+/* ---------- 16bis. Pensées de L’AGENCEUR — essai éditorial ---------- */
+.pensees-page { padding-top: clamp(8rem, 14vw, 11rem); }
+.pensees-grid { display: grid; grid-template-columns: minmax(10rem, 0.25fr) minmax(0, 1fr); gap: clamp(3rem, 8vw, 8rem); align-items: start; }
+.pensees-grid__rail { position: sticky; top: 7rem; align-self: start; }
+.pensees-grid__thread { width: 1px; height: 7rem; margin: 1.5rem 0; background: linear-gradient(180deg, var(--or), transparent); }
+.pensees-toc { display: flex; flex-direction: column; gap: 0.75rem; max-width: 18rem; }
+.pensees-toc a { font-family: var(--font-mono); font-size: 0.68rem; line-height: 1.45; letter-spacing: 0.03em; color: var(--gris); transition: color 0.3s var(--ease); }
+.pensees-toc a:hover { color: var(--or); }
+.pensees-essay { min-width: 0; max-width: 78ch; }
+.pensees-page__header { max-width: 62rem; margin-bottom: clamp(3.5rem, 8vw, 7rem); }
+.pensees-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(3rem, 8vw, 7.2rem); line-height: 0.94; letter-spacing: -0.02em; color: var(--blanc-casse); margin-top: 1rem; }
+.pensees-subtitle { margin-top: 1.6rem; font-family: var(--font-mono); font-size: clamp(0.72rem, 1.2vw, 0.9rem); letter-spacing: 0.16em; color: var(--or); }
+.pensees-lead { max-width: 62ch; margin-top: 1.7rem; font-size: clamp(1.05rem, 1.8vw, 1.25rem); line-height: 1.75; color: var(--blanc-casse); }
+.pensee-section { padding: clamp(2.8rem, 6vw, 5rem) 0; border-top: 1px solid var(--ligne); scroll-margin-top: 7rem; }
+.pensee-section:first-child { border-top: 0; padding-top: 0; }
+.pensee-index { display: block; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em; line-height: 1.5; color: var(--or); text-transform: uppercase; }
+.pensee-section h2 { max-width: 20ch; margin: 0.9rem 0 1.8rem; font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.4rem); font-weight: 400; line-height: 1.05; color: var(--blanc-casse); }
+.pensee-section p { max-width: 68ch; margin-bottom: 1.35rem; color: var(--gris); font-size: clamp(1rem, 1.4vw, 1.08rem); line-height: 1.9; }
+.pensee-quote { margin: clamp(2rem, 5vw, 3.5rem) 0; padding: 1.3rem 0 1.3rem clamp(1.2rem, 3vw, 2rem); border-left: 1px solid var(--or); max-width: 66ch; font-family: var(--font-display); font-size: clamp(1.35rem, 2.8vw, 2rem); font-weight: 400; line-height: 1.45; color: var(--blanc-casse); }
+.pensee-quote--small { max-width: 40ch; font-size: clamp(1.2rem, 2.3vw, 1.7rem); }
+.pensee-quote--final { font-size: clamp(1.6rem, 3.5vw, 2.6rem); margin-top: 2rem; }
+.pensee-section--stars { position: relative; }
+.pensee-section--stars::after { content: "✦  ·  ✦  ·  ✦"; display: block; margin-top: 2rem; font-family: var(--font-mono); letter-spacing: 0.7em; color: var(--or); opacity: 0.45; }
+.pensee-section--coda { padding-bottom: 1rem; }
+.pensees-signature { margin-top: clamp(3rem, 7vw, 6rem); padding: 2rem 0 0; border-top: 1px solid var(--or); font-family: var(--font-display); font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.65; color: var(--blanc-casse); }
+.pensees-signature .eyebrow { margin-bottom: 1rem; }
+@media (max-width: 900px) {
+  .pensees-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .pensees-grid__rail { position: static; }
+  .pensees-grid__thread { display: none; }
+  .pensees-toc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: none; padding-bottom: 1rem; border-bottom: 1px solid var(--ligne); }
+}
+@media (max-width: 560px) {
+  .pensees-page { padding-top: 7.5rem; }
+  .pensees-toc { grid-template-columns: 1fr; gap: 0.65rem; }
+  .pensee-section p { line-height: 1.8; }
+  .pensee-quote { padding-left: 1rem; }
+}
+
 /* ---------- 17. Pages secondaires (légal, 404) ---------- */
 .legal-page { padding-top: clamp(8rem, 14vw, 11rem); }
 .legal-page__header { max-width: 72ch; margin-bottom: clamp(2.5rem, 6vw, 4rem); }
