@@ -640,3 +640,8 @@ pochettes et vidéos sans aucune modification de code (voir tableau dans
 - SEO de base : meta tags, Open Graph, Twitter Cards, Schema.org
   (`Person`, `MusicGroup`), `robots.txt`, `sitemap.xml`, favicon.
 - Prêt pour un déploiement statique (GitHub Pages / Netlify / Vercel).
+
+## 2026-08-21 — Pensées de L’AGENCEUR : restauration éditoriale
+- Restauration de la réflexion originale « Intelligence, Sagesse & Véritable Loyauté » sans simplification ni raccourcissement.
+- Conservation des développements ajoutés autour des étoiles, de la jalousie, du discernement du leader et de la peur d’éteindre les lumières qui ont contribué à sa réussite.
+- Préservation de la lecture longue et continue : les paragraphes restent développés et les citations servent de respirations, sans fragmenter artificiellement le texte.
